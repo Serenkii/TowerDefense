@@ -9,6 +9,10 @@ public abstract class GameObject {
 
     public abstract void update();
 
+    public GameObject(final String pathToImage) {
+        sprite = new Sprite(pathToImage);
+    }
+
     public void render(GraphicsContext context) {
         sprite.render(position, context);
     }

@@ -1,16 +1,26 @@
 package com.serenki.game;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
+
 public class Battlefield {
 
-    private int size;
+    private int size;       //in pixels
     private int gridSize;   //including outer squares, where you cannot place towers
-    private int xPosition;  //x Position on screen (left == 0 px)
-    private int yPosition;  //y Position on screen (top == 0 px)
+    private GridCoordinate pixelPos;
 
-    public Battlefield(int size, int xPosition, int gridSize, int yPosition) {
+    private Sprite background;
+
+    public Battlefield(int size, GridCoordinate pixelPos, int gridSize, final String pathToImage) {
         this.size = size;
         this.gridSize = gridSize;
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+        this.pixelPos = pixelPos;
+
+        background = new Sprite(pathToImage);
+    }
+
+    public void render(final GraphicsContext context) {
+        background.render(pixelPos, context);
     }
 }

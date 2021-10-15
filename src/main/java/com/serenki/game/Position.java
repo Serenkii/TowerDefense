@@ -2,24 +2,27 @@ package com.serenki.game;
 
 public class Position {
 
-    private int x;
-    private int y;
+    private double x;
+    private double y;
 
-    public Position(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Position(double x, double y) {
+        setX(x);
+        setY(y);
     }
 
-    public Position(Position position) {
-        this.x = position.getX();
-        this.y = position.getY();
-    }
-
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
         return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 }

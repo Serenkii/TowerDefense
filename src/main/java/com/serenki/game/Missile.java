@@ -1,5 +1,7 @@
 package com.serenki.game;
 
+import com.serenki.game.enemies.Enemy;
+
 public class Missile extends GameObject{
 
     Enemy target;

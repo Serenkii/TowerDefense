@@ -18,7 +18,8 @@ public class Sprite {
      * @param context
      */
     public void render(Position position, GraphicsContext context) {
-        GridCoordinate upperLeftCorner = new GridCoordinate((int) ((position.getX() * 72) - image.getHeight() / 2) , (int) ((position.getY() * 72) - (image.getWidth() / 2)));
+        GridCoordinate upperLeftCorner = new GridCoordinate((int) ((position.getX() * Battlefield.SQUARE_SIZE) - image.getHeight() / 2),
+                (int) ((position.getY() * Battlefield.SQUARE_SIZE) - (image.getWidth() / 2)));
         this.render(upperLeftCorner, context);
     }
 

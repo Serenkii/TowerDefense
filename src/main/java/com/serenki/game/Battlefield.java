@@ -6,21 +6,40 @@ import javafx.scene.image.Image;
 
 public class Battlefield {
 
-    private int size;       //in pixels
-    private int gridSize;   //including outer squares, where you cannot place towers
-    private GridCoordinate pixelPos;
+    public final static int PIXEL_SIZE = 1080;
+    public final static int GRID_SIZE = 15;
+    public final static int EDGE_SIZE = 1;
+    public final static int SQUARE_SIZE = PIXEL_SIZE / GRID_SIZE;   //72
+    public final static GridCoordinate PIXEL_POS = new GridCoordinate(0, 0);
 
     private Sprite background;
 
-    public Battlefield(int size, GridCoordinate pixelPos, int gridSize, final String pathToImage) {
-        this.size = size;
-        this.gridSize = gridSize;
-        this.pixelPos = pixelPos;
 
-        background = new Sprite(pathToImage);
+
+    public Battlefield() {
+
+        background = new Sprite("file:src/main/resources/com/serenki/art/background/PrototypeGrid.jpg");
     }
 
     public void render(final GraphicsContext context) {
-        background.render(pixelPos, context);
+        background.render(PIXEL_POS, context);
+    }
+
+
+    /**
+     * Dunno if I may ever change to something like that.
+     * @deprecated
+     * @param size
+     * @param pixelPos
+     * @param gridSize
+     * @param pathToImage
+     */
+    @Deprecated
+    public Battlefield(int size, GridCoordinate pixelPos, int gridSize, final String pathToImage) {
+        /*this.size = size;
+        this.gridSize = gridSize;
+        this.pixelPos = pixelPos;   */
+
+        background = new Sprite(pathToImage);
     }
 }

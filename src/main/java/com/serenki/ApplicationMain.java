@@ -1,17 +1,15 @@
 package com.serenki;
 
 import com.serenki.game.Game;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import javax.swing.text.html.ImageView;
 import java.io.IOException;
 
 public class ApplicationMain extends Application {
@@ -38,7 +36,14 @@ public class ApplicationMain extends Application {
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.show();
 
-        game.update();
+        AnimationTimer gameloop = new AnimationTimer() {
+            @Override
+            public void handle(long l) {
+                game.update();
+            }
+        };
+        gameloop.start();
+
     }
 
     public static void main(String[] args) {

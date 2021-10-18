@@ -10,6 +10,11 @@ public class Position {
         setY(y);
     }
 
+    public Position(Position position) {
+        this.setX(position.getX());
+        this.setY(position.getY());
+    }
+
     public double getX() {
         return x;
     }

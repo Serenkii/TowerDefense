@@ -13,6 +13,12 @@ public abstract class GameObject {
         sprite = new Sprite(pathToImage);
     }
 
+    public GameObject(final Position position, final String pathToImage) {
+        this.position = new Position(position);
+        sprite = new Sprite(pathToImage);
+    }
+
+
     public void render(GraphicsContext context) {
         sprite.render(position, context);
     }

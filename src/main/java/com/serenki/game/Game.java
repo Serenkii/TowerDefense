@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public class Game {
 
+    public static final int FRAME_RATE = 60;
+
     private GraphicsContext graphicsContext;
 
     private ArrayList<Tower> towers;

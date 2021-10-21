@@ -1,9 +1,6 @@
 package com.serenki.game.towers;
 
-import com.serenki.game.Battlefield;
-import com.serenki.game.GameObject;
-import com.serenki.game.GridCoordinate;
-import com.serenki.game.Position;
+import com.serenki.game.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -23,7 +20,7 @@ public class Tower extends GameObject {
      * @param pathToPicture The path (String) to the picture. Example: "file:src/image.jpg"
      */
     public Tower (final GridCoordinate coordinate, final int cooldownInFrames, double range, String pathToPicture) {
-        super(pathToPicture);
+        super(pathToPicture, Battlefield.SQUARE_SIZE, Battlefield.SQUARE_SIZE);
 
         this.setCoordinate(coordinate);
         this.COOLDOWN = cooldownInFrames;
@@ -40,10 +37,10 @@ public class Tower extends GameObject {
      * @param pathToPicture The path (String) to the picture. Example: "file:src/image.jpg"
      */
     public Tower (final GridCoordinate coordinate, final double cooldown, double range, String pathToPicture) {
-        super(pathToPicture);
+        super(pathToPicture, Battlefield.SQUARE_SIZE, Battlefield.SQUARE_SIZE);
 
         this.setCoordinate(coordinate);
-        this.COOLDOWN = (int) (cooldown * 60 + 0.5);        //60 --> framerate -- create static public final variable for that?
+        this.COOLDOWN = (int) (cooldown * Game.FRAME_RATE + 0.5);
         this.cooldown = 0;
         this.range = range + 0.5;
         this.selected = false;
@@ -51,7 +48,7 @@ public class Tower extends GameObject {
 
     private void setCoordinate(final GridCoordinate coordinate) {
         this.coordinate = new GridCoordinate(coordinate);
-        this.position = new Position(coordinate.getX() + 0.5, coordinate.getY() + 0.5);
+        this.position = new Vector(coordinate.getX() + 0.5, coordinate.getY() + 0.5);
     }
 
     @Override

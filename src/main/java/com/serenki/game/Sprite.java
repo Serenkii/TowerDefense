@@ -2,14 +2,18 @@ package com.serenki.game;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class Sprite {
 
-    Image image;
+    //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/image/Image.html
+    private Image image;
 
     public Sprite(String pathToImage) {
         this.image = new Image(pathToImage);
+    }
+
+    public Sprite(String pathToImage, double width, double height) {
+        this.image = new Image(pathToImage, height, width, false, false);
     }
 
     /**
@@ -17,7 +21,7 @@ public class Sprite {
      * @param position The ingame position (default from 0.0 to 15.0)
      * @param context
      */
-    public void render(Position position, GraphicsContext context) {
+    public void render(Vector position, GraphicsContext context) {
         GridCoordinate upperLeftCorner = new GridCoordinate((int) ((position.getX() * Battlefield.SQUARE_SIZE) - image.getHeight() / 2),
                 (int) ((position.getY() * Battlefield.SQUARE_SIZE) - (image.getWidth() / 2)));
         this.render(upperLeftCorner, context);
@@ -25,7 +29,7 @@ public class Sprite {
 
     /**
      *
-     * @param pixelCoordinate Top left corner of the screen
+     * @param pixelCoordinate The pixel-position the top left corner of the image should be placed in.
      * @param context
      */
     public void render(GridCoordinate pixelCoordinate, GraphicsContext context) {

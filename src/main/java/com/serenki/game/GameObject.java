@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 public abstract class GameObject {
 
     protected Sprite sprite;
-    protected Position position;
+    protected Vector position;
 
     public abstract void update();
 
@@ -13,9 +13,18 @@ public abstract class GameObject {
         sprite = new Sprite(pathToImage);
     }
 
-    public GameObject(final Position position, final String pathToImage) {
-        this.position = new Position(position);
+    public GameObject(final String pathToImage, final double imageWidth, final double imageHeight) {
+        sprite = new Sprite(pathToImage, imageWidth, imageHeight);
+    }
+
+    public GameObject(final Vector position, final String pathToImage) {
+        this.position = new Vector(position);
         sprite = new Sprite(pathToImage);
+    }
+
+    public GameObject(final Vector position, final String pathToImage, final double imageWidth, final double imageHeight) {
+        this.position = new Vector(position);
+        sprite = new Sprite(pathToImage, imageWidth, imageHeight);
     }
 
 

@@ -1,12 +1,12 @@
 package com.serenki.game.enemies;
 
 import com.serenki.game.GameObject;
-import com.serenki.game.Position;
+import com.serenki.game.Vector;
 
 public abstract class Enemy extends GameObject {
 
-    private Position destination;
-    private Position velocity;
+    private Vector destination;
+    private Vector velocity;
     private double speed;           //distance per frame
     private double hitBoxRadius;
 
@@ -17,7 +17,7 @@ public abstract class Enemy extends GameObject {
      * @param hitBoxRadius The radius of the circular hitbox of the enemy. (Used by missiles)
      * @param pathToImage
      */
-    public Enemy(Position position, double speed, double hitBoxRadius, String pathToImage) {
+    public Enemy(Vector position, double speed, double hitBoxRadius, String pathToImage) {
         super(position, pathToImage);
         setSpeed(speed);
         setHitBoxRadius(hitBoxRadius);

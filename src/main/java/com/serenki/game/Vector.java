@@ -34,6 +34,15 @@ public class Vector {
     }
 
     /**
+     * Normalizes the vector: The vector will face in the same direction but the length will be 1.
+     */
+    public void normalize() {
+        double d = 1 / this.abs();      //solving the equation for x: sqrt((ax^2+bx^2) = 1 gives you: x = 1/sqrt(a^2+b^2)
+        this.x = this.x * d;
+        this.y = this.y * d;
+    }
+
+    /**
      * Adds the x and y value of a second vector to this one.
      * @param vector The values to add.
      */
@@ -114,7 +123,7 @@ public class Vector {
      * @return The absolute value, so to speak the length of the vector if seen as an arrow.
      */
     public double abs() {
-        return Math.sqrt(absoluteSquared());
+        return Math.sqrt(this.absoluteSquared());
     }
 
     /**
@@ -122,6 +131,14 @@ public class Vector {
      * @return The absolute value, so to speak the length of the vector if seen as an arrow, SQUARED(!). (For efficiency, so the Math.sqrt(...)-Method does not need to be run)
      */
     public double absoluteSquared() {
-        return ((this.x * this.x) + (this.y + this.y));
+        return (this.x * this.x) + (this.y * this.y);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vector vector = (Vector) o;
+        return Double.compare(vector.x, x) == 0 && Double.compare(vector.y, y) == 0;
     }
 }

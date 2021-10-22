@@ -1,7 +1,6 @@
 package com.serenki.game;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
 
 public class Battlefield {
@@ -17,8 +16,7 @@ public class Battlefield {
 
 
     public Battlefield() {
-
-        background = new Sprite("file:src/main/resources/com/serenki/art/background/PrototypeGrid.jpg");
+        background = new Sprite("file:src/main/resources/com/serenki/art/background/PrototypeGrid.jpg", Battlefield.PIXEL_SIZE, Battlefield.PIXEL_SIZE);
     }
 
     public void render(final GraphicsContext context) {

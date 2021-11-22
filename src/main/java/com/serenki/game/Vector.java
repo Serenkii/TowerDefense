@@ -134,6 +134,19 @@ public class Vector {
         return (this.x * this.x) + (this.y * this.y);
     }
 
+    /**
+     * Returns the vector you get when pointing from this vector to the target vector.
+     * @param target The vector the return vector should face to.
+     * @return The vector you get if you face the target vector from this vector.
+     */
+    public Vector vectorTo(@NotNull final Vector target) {
+        Vector t = new Vector(target);
+        t.subtract(this);
+        return t;
+    }
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

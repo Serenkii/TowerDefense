@@ -34,6 +34,14 @@ public class Game {
         towers.add(new Tower(new GridCoordinate(1, 13), 60, 3.0, "file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));
         towers.get(1).changeSelectionStatus();
         towers.add(new Tower(new GridCoordinate(13, 12), 60, 2.0, "file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));
+
+        //test --- STILL VERY BUGGY, but at least the enemy is moving I guess
+        enemies.add(new Enemy(new Vector(2, 8), 1, 0.2, "file:src/main/resources/com/serenki/art/enemies/DefaultEnemy.png") {
+            @Override
+            public void update() {
+                super.update();
+            }
+        });
     }
 
     public void update() {

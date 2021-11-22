@@ -6,7 +6,7 @@ import com.serenki.game.Vector;
 public abstract class Enemy extends GameObject {
 
     private Vector destination;
-    private Vector velocity;
+    //private Vector velocity;
     private double speed;           //distance per frame
     private double hitBoxRadius;
 
@@ -21,6 +21,19 @@ public abstract class Enemy extends GameObject {
         super(position, pathToImage);
         setSpeed(speed);
         setHitBoxRadius(hitBoxRadius);
+        setDestinationBasedOnStart(position);
+    }
+
+    private void setDestinationBasedOnStart(Vector position) {
+        if (position.getX() < 0) {
+            destination = new Vector(16, position.getY());
+            return;
+        }
+        if (position.getY() < 0) {
+            destination = new Vector(position.getX(), 16);
+            return;
+        }
+        destination = new Vector(8, 8);
     }
 
     private void setSpeed(double speed) {
@@ -52,7 +65,11 @@ public abstract class Enemy extends GameObject {
         move();
     }
 
-    public void move() {
-
+    public void move() {        //TODO
+        Vector velocity = new Vector(position);
+        velocity.vectorTo(destination);
+        velocity.normalize();
+        velocity.multiply(speed);
+        position.add(velocity);
     }
 }

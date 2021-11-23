@@ -81,4 +81,22 @@ class VectorTest {
         v = new Vector(6, 8);
         Assertions.assertEquals(100, v.absoluteSquared());
     }
+
+    @Test
+    void vectorTo() {
+        Vector v = new Vector(0, 0);
+        Vector vecTo = v.vectorTo(new Vector(3, 0));
+        Assertions.assertEquals(3, vecTo.getX());
+        Assertions.assertEquals(0, vecTo.getY());
+
+        Vector v1 = new Vector(0, 0);
+        Vector vecTo1 = v1.vectorTo(new Vector(3, 4));
+        Assertions.assertEquals(3, vecTo1.getX());
+        Assertions.assertEquals(4, vecTo1.getY());
+
+        Vector v2 = new Vector(2, 10);
+        Vector vecTo2 = v2.vectorTo(new Vector(5, 7));
+        Assertions.assertEquals(3, vecTo2.getX());
+        Assertions.assertEquals(-3, vecTo2.getY());
+    }
 }

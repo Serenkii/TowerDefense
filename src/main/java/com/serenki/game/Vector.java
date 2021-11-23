@@ -2,6 +2,11 @@ package com.serenki.game;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * TODO: Refactor so that Vector has x and y which are final and each method returns a new Vector instead of changing this one
+ */
+
+
 public class Vector {
 
     private double x;
@@ -38,7 +43,7 @@ public class Vector {
      */
     public void normalize() {
         double d = 1 / this.abs();      //solving the equation for x: sqrt((ax^2+bx^2) = 1 gives you: x = 1/sqrt(a^2+b^2)
-        this.x = this.x * d;
+        this.x = this.x * d;        //for the case that the length is 0, d will be infinity, lets just hope nothing crazy happens...
         this.y = this.y * d;
     }
 

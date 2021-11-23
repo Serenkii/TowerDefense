@@ -1,5 +1,6 @@
 package com.serenki.game.enemies;
 
+import com.serenki.game.Game;
 import com.serenki.game.GameObject;
 import com.serenki.game.Vector;
 
@@ -33,14 +34,14 @@ public abstract class Enemy extends GameObject {
             destination = new Vector(position.getX(), 16);
             return;
         }
-        destination = new Vector(8, 8);
+        destination = new Vector(7.5, 7.5);     //to delete
     }
 
     private void setSpeed(double speed) {
         if (speed <= 0)
             this.speed = 0.001;
         else
-            this.speed = speed / 60;
+            this.speed = speed / Game.FRAME_RATE;
     }
 
     private void setHitBoxRadius(double hitBoxRadius) {
@@ -66,8 +67,7 @@ public abstract class Enemy extends GameObject {
     }
 
     public void move() {        //TODO
-        Vector velocity = new Vector(position);
-        velocity.vectorTo(destination);
+        Vector velocity = this.position.vectorTo(destination);
         velocity.normalize();
         velocity.multiply(speed);
         position.add(velocity);

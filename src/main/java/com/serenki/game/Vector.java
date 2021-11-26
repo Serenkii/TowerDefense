@@ -2,10 +2,6 @@ package com.serenki.game;
 
 import org.jetbrains.annotations.NotNull;
 
-/**
- * TODO: Refactor so that Vector has x and y which are final and each method returns a new Vector instead of changing this one
- */
-
 
 public class Vector {
 

@@ -19,28 +19,28 @@ class VectorTest {
     @Test
     void add() {
         Vector v = new Vector(5, 11);
-        v.add(new Vector(12, 19));
+        v = v.add(new Vector(12, 19));
         Assertions.assertTrue(v.equals(new Vector(17, 30)));
     }
 
     @Test
     void subtract() {
         Vector v = new Vector(5, 11);
-        v.subtract(new Vector(12, 19));
+        v = v.subtract(new Vector(12, 19));
         Assertions.assertTrue(v.equals(new Vector(-7, -8)));
     }
 
     @Test
     void multiply() {
         Vector v = new Vector(10, 30);
-        v.multiply(3);
+        v = v.multiply(3);
         Assertions.assertTrue(v.equals(new Vector(30, 90)));
     }
 
     @Test
     void divide() {
         Vector v = new Vector(-12, -30);
-        v.divide(-3);
+        v = v.divide(-3);
         Assertions.assertTrue(v.equals(new Vector(4, 10)));
     }
 
@@ -54,16 +54,6 @@ class VectorTest {
     void distanceToSquared() {
         Vector v1 = new Vector(0, 0);
         Assertions.assertEquals(25, v1.distanceToSquared(new Vector(3, 4)));
-    }
-
-    @Test
-    void distanceBetweenPoints() {
-        Assertions.assertEquals(5, Vector.distanceBetweenPoints(new Vector(0,0), new Vector(4, 3)));
-    }
-
-    @Test
-    void distanceBetweenPointsSquared() {
-        Assertions.assertEquals(25, Vector.distanceBetweenPointsSquared(new Vector(0,0), new Vector(4, 3)));
     }
 
     @Test
@@ -98,5 +88,18 @@ class VectorTest {
         Vector vecTo2 = v2.vectorTo(new Vector(5, 7));
         Assertions.assertEquals(3, vecTo2.getX());
         Assertions.assertEquals(-3, vecTo2.getY());
+    }
+
+    @Test
+    void dotProduct() {
+        Assertions.assertEquals(0, new Vector(3, 4).dotProduct(new Vector(0, 0)));
+        Assertions.assertEquals(25, new Vector(3, 4).dotProduct(new Vector(3, 4)));
+        Assertions.assertEquals(35, new Vector(3, 4).dotProduct(new Vector(5, 5)));
+    }
+
+    @Test
+    void orthogonal() {
+        Assertions.assertEquals(new Vector(1, 0), new Vector(0, -1).orthogonal());
+        Assertions.assertEquals(new Vector(3, 4), new Vector(4, -3).orthogonal());
     }
 }

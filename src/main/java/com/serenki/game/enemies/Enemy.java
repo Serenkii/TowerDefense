@@ -68,8 +68,8 @@ public abstract class Enemy extends GameObject {
 
     public void move() {        //TODO
         Vector velocity = this.position.vectorTo(destination);
-        velocity.normalize();
-        velocity.multiply(speed);
-        position.add(velocity);
+        velocity = velocity.normalize();
+        velocity = velocity.multiply(speed);
+        this.position = position.add(velocity);
     }
 }

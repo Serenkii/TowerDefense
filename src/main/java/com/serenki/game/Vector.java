@@ -9,78 +9,87 @@ import org.jetbrains.annotations.NotNull;
 
 public class Vector {
 
-    private double x;
-    private double y;
+    private final double x;
+    private final double y;
 
     public Vector(double x, double y) {
-        setX(x);
-        setY(y);
+        this.x = x;
+        this.y = y;
     }
 
     public Vector(@NotNull Vector position) {
-        this.setX(position.getX());
-        this.setY(position.getY());
+        this.x = position.getX();
+        this.y = position.getY();
     }
 
     public double getX() {
         return x;
     }
 
-    public void setX(double x) {
-        this.x = x;
-    }
-
     public double getY() {
         return y;
     }
 
-    public void setY(double y) {
-        this.y = y;
-    }
-
     /**
-     * Normalizes the vector: The vector will face in the same direction but the length will be 1.
+     * Returns a normalized vector of this vector.
+     * @return A normalized vector facing in the same direction.
      */
-    public void normalize() {
-        double d = 1 / this.abs();      //solving the equation for x: sqrt((ax^2+bx^2) = 1 gives you: x = 1/sqrt(a^2+b^2)
-        this.x = this.x * d;        //for the case that the length is 0, d will be infinity, lets just hope nothing crazy happens...
-        this.y = this.y * d;
+    public Vector normalize() {
+        double d = this.abs();      //solving the equation for x: sqrt((ax^2+bx^2) = 1 gives you: x = 1/sqrt(a^2+b^2)
+                                        //for the case that the length is 0, d will be infinity, lets just hope nothing crazy happens...
+        return new Vector(this.x / d, this.y / d);
     }
 
     /**
      * Adds the x and y value of a second vector to this one.
      * @param vector The values to add.
+     * @return Returns the vector you get when adding vector to this.
      */
-    public void add(@NotNull Vector vector) {
-        this.setX(this.getX() + vector.getX());
-        this.setY(this.getY() + vector.getY());
+    public Vector add(@NotNull final Vector vector) {
+        return new Vector(this.x + vector.getX(), this.y + vector.getY());
     }
 
     /**
      * Subtracts the x and y value of a seconds vector to this one.
      * @param vector The values to subtract.
+     * @return Returns the vector you get when subtracting vector from this.
      */
-    public void subtract(@NotNull Vector vector) {
-        this.setX(this.getX() - vector.getX());
-        this.setY(this.getY() - vector.getY());
+    public Vector subtract(@NotNull final Vector vector) {
+        return new Vector(this.x - vector.getX(), this.y - vector.getY());
     }
 
     /**
      * Multiplies both x and y with the parameter d.
-     * @param d The value to multiply with.
+     * @param factor The value to multiply with.
+     * @return Returns a vector multiplied with the factor.
      */
-    public void multiply(double d) {
-        this.setX(this.getX() * d);
-        this.setY(this.getY() * d);
+    public Vector multiply(final double factor) {
+        return new Vector(this.x * factor, this.y * factor);
     }
 
     /**
      * Divides both x and y by the parameter d.
-     * @param d The value to divide by.
+     * @param divisor The value to divide by.
+     * @return Returns a vector divided by the divisor.
      */
-    public void divide(double d) {
-        this.setX(this.getX() / d);
-        this.setY(this.getY() / d);
+    public Vector divide(final double divisor) {
+        return new Vector(this.x / divisor, this.y / divisor);
+    }
+
+    /**
+     * @return Returns the left orthogonal vector of this.
+     */
+    public Vector orthogonal() {
+        return new Vector(-this.y, this.x);
+    }
+
+    /**
+     * Calculates the dot product of the two vectors.
+     * @param vector The other vector.
+     * @return Returns the dot product of these two vectors.
+     */
+    public double dotProduct(@NotNull final Vector vector) {
+        return ((this.x * vector.getX()) + (this.y * vector.getY()));
     }
 
     /**
@@ -88,9 +97,7 @@ public class Vector {
      * @return The distance from this object to the point vector.
      */
     public double distanceTo(@NotNull final Vector vector) {
-        Vector v = new Vector(this);
-        v.subtract(vector);
-        return v.abs();
+        return this.vectorTo(vector).abs();
     }
 
     /**
@@ -99,28 +106,7 @@ public class Vector {
      * @return The distance from this object to the point vector, SQUARED(!). (For efficiency, so the Math.sqrt(...)-Method does not need to be run)
      */
     public double distanceToSquared(@NotNull final Vector vector) {
-        Vector v = new Vector(this);
-        v.subtract(vector);
-        return v.absoluteSquared();
-    }
-
-    /**
-     * @param vector1 The first vector.
-     * @param vector2 The second vector.
-     * @return The distance between those two vectors.
-     */
-    public static double distanceBetweenPoints(@NotNull final Vector vector1, @NotNull final Vector vector2) {
-        return vector1.distanceTo(vector2);
-    }
-
-    /**
-     * Use this method for efficiency, so you do not have to use the Math.sqrt(...)-Method several times.
-     * @param vector1 The first vector.
-     * @param vector2 The second vector.
-     * @return The distance between the two vectors, SQUARED(!). (For efficiency, so the Math.sqrt(...)-Method does not need to be run)
-     */
-    public static double distanceBetweenPointsSquared(@NotNull final Vector vector1, @NotNull final Vector vector2) {
-        return vector1.distanceToSquared(vector2);
+        return this.vectorTo(vector).absoluteSquared();
     }
 
     /**
@@ -145,9 +131,7 @@ public class Vector {
      * @return The vector you get if you face the target vector from this vector.
      */
     public Vector vectorTo(@NotNull final Vector target) {
-        Vector t = new Vector(target);
-        t.subtract(this);
-        return t;
+        return target.subtract(this);
     }
 
 

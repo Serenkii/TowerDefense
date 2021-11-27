@@ -11,18 +11,22 @@ public abstract class Enemy extends GameObject {
     private double speed;           //distance per frame
     private double hitBoxRadius;
 
+    private int healthPoints;
+
 
     /**
      * @param position The exact position on the board. (Default: From 0.0 to 15.0, both x and y)
      * @param speed The speed per second the enemy moves.
      * @param hitBoxRadius The radius of the circular hitbox of the enemy. (Used by missiles)
      * @param pathToImage
+     * @param HP
      */
-    public Enemy(Vector position, double speed, double hitBoxRadius, String pathToImage) {
+    public Enemy(Vector position, double speed, double hitBoxRadius, int HP, String pathToImage) {
         super(position, pathToImage);
         setSpeed(speed);
         setHitBoxRadius(hitBoxRadius);
         setDestinationBasedOnStart(position);
+        setHealthPoints(HP);
     }
 
     private void setDestinationBasedOnStart(Vector position) {
@@ -51,6 +55,28 @@ public abstract class Enemy extends GameObject {
             this.hitBoxRadius = hitBoxRadius;
     }
 
+    private void setHealthPoints(int HP) {
+        if (HP <= 0)
+            this.healthPoints = 1;
+        else
+            this.healthPoints = HP;
+    }
+
+
+    /**
+     * @param position The exact position on the board. (Default: From 0.0 to 15.0, both x and y)
+     * @param speed The speed per second the enemy moves.
+     * @param hitBoxRadius The radius of the circular hitbox of the enemy. (Used by missiles)
+     * @param pathToImage
+     * @deprecated Doesn't give HP
+     */
+    @Deprecated
+    public Enemy(Vector position, double speed, double hitBoxRadius, String pathToImage) {
+        super(position, pathToImage);
+        setSpeed(speed);
+        setHitBoxRadius(hitBoxRadius);
+        setDestinationBasedOnStart(position);
+    }
 
     /**
      * @param pathToImage

@@ -30,13 +30,13 @@ public class Game {
         this.graphicsContext = graphicsContextOfCanvas;
 
         //test
-        towers.add(new Tower(new GridCoordinate(3, 3), 60, 2.0, "file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));
-        towers.add(new Tower(new GridCoordinate(1, 13), 60, 3.0, "file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));
+        towers.add(new Tower(new GridCoordinate(3, 3), 60, 2.0, this.enemies,"file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));
+        towers.add(new Tower(new GridCoordinate(1, 13), 60, 3.0, this.enemies,"file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));
         towers.get(1).changeSelectionStatus();
-        towers.add(new Tower(new GridCoordinate(13, 12), 60, 2.0, "file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));
+        towers.add(new Tower(new GridCoordinate(13, 12), 60, 2.0, this.enemies,"file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));
 
         //test --- at least the enemy is moving I guess
-        enemies.add(new Enemy(new Vector(-1, 7.5), 3, 0.2, "file:src/main/resources/com/serenki/art/enemies/DefaultEnemy.png") {
+        enemies.add(new Enemy(new Vector(-1, 13.5), 1, 0.2, "file:src/main/resources/com/serenki/art/enemies/DefaultEnemy.png") {
 
         });
     }

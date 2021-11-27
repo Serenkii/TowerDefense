@@ -1,8 +1,12 @@
 package com.serenki.game.towers;
 
 import com.serenki.game.*;
+import com.serenki.game.enemies.Enemy;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public class Tower extends GameObject {
 
@@ -12,6 +16,9 @@ public class Tower extends GameObject {
     private double range;
     private boolean selected;
 
+    private ArrayList<Enemy> listOfEnemies;
+    private Enemy target;
+
     /**
      *
      * @param coordinate The square the tower is standing on.
@@ -19,7 +26,7 @@ public class Tower extends GameObject {
      * @param range The maximum range the tower can shoot. (A range of 1 should be able to reach all squares +-x and +-y, that's why 0.5 is automatically added.)
      * @param pathToPicture The path (String) to the picture. Example: "file:src/image.jpg"
      */
-    public Tower (final GridCoordinate coordinate, final int cooldownInFrames, double range, String pathToPicture) {
+    public Tower (final GridCoordinate coordinate, final int cooldownInFrames, double range, ArrayList<Enemy> enemyList, String pathToPicture) {
         super(pathToPicture, Battlefield.SQUARE_SIZE, Battlefield.SQUARE_SIZE);
 
         this.setCoordinate(coordinate);
@@ -27,6 +34,8 @@ public class Tower extends GameObject {
         this.cooldown = 0;
         this.range = range + 0.5;
         this.selected = false;
+
+        this.listOfEnemies = enemyList;
     }
 
     /**
@@ -36,7 +45,7 @@ public class Tower extends GameObject {
      * @param range The maximum range the tower can shoot. (A range of 1 should be able to reach all squares +-x and +-y, that's why 0.5 is automatically added.)
      * @param pathToPicture The path (String) to the picture. Example: "file:src/image.jpg"
      */
-    public Tower (final GridCoordinate coordinate, final double cooldown, double range, String pathToPicture) {
+    public Tower (final GridCoordinate coordinate, final double cooldown, double range, ArrayList<Enemy> enemyList, String pathToPicture) {
         super(pathToPicture, Battlefield.SQUARE_SIZE, Battlefield.SQUARE_SIZE);
 
         this.setCoordinate(coordinate);
@@ -44,6 +53,8 @@ public class Tower extends GameObject {
         this.cooldown = 0;
         this.range = range + 0.5;
         this.selected = false;
+
+        this.listOfEnemies = enemyList;
     }
 
     private void setCoordinate(final GridCoordinate coordinate) {
@@ -51,9 +62,25 @@ public class Tower extends GameObject {
         this.position = new Vector(coordinate.getX() + 0.5, coordinate.getY() + 0.5);
     }
 
+
+    public void findTarget() {
+        for (Enemy enemy : this.listOfEnemies) {
+            if (inRange(enemy)) {
+                this.target = enemy;
+                //System.out.println(this + " found an enemy");
+                return;
+            }
+        }
+        this.target = null;
+    }
+
+    private boolean inRange(@NotNull Enemy enemy) {
+        return this.position.distanceToSquared(enemy.getPosition()) <= (this.range * this.range);
+    }
+
     @Override
     public void update() {
-
+        findTarget();
         shoot();
     }
 
@@ -61,8 +88,10 @@ public class Tower extends GameObject {
         updateCooldown();
         if (!isReady())
             return;
-        //do shooty thingy
         reload();
+        if (target != null) {
+            System.out.println(this + ": SHOOT");
+        }
     }
 
     public void reload() {

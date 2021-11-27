@@ -27,6 +27,9 @@ public abstract class GameObject {
         sprite = new Sprite(pathToImage, imageWidth, imageHeight);
     }
 
+    public Vector getPosition() {
+        return position;
+    }
 
     public void render(GraphicsContext context) {
         sprite.render(position, context);

@@ -1,7 +1,8 @@
 package com.serenki.game;
 
 import com.serenki.game.enemies.Enemy;
-import com.serenki.game.missiles.Missile;
+import com.serenki.game.projectiles.Missile;
+import com.serenki.game.projectiles.Projectile;
 import com.serenki.game.towers.Tower;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -15,7 +16,7 @@ public class Game {
 
     private ArrayList<Tower> towers;
     private ArrayList<Enemy> enemies;
-    private ArrayList<Missile> missiles;
+    private ArrayList<Projectile> projectiles;
 
     private Battlefield battlefield;
 
@@ -25,7 +26,7 @@ public class Game {
         //gameObjects = new ArrayList<>();
         towers = new ArrayList<>();
         enemies = new ArrayList<>();
-        missiles = new ArrayList<>();
+        projectiles = new ArrayList<>();
 
         this.graphicsContext = graphicsContextOfCanvas;
 
@@ -39,6 +40,9 @@ public class Game {
         enemies.add(new Enemy(new Vector(-1, 13.5), 1, 0.2, "file:src/main/resources/com/serenki/art/enemies/DefaultEnemy.png") {
 
         });
+
+        //test projectile
+        projectiles.add(new Missile(new Vector(0.5, 0.5), new Vector(14.5, 9.5), 5, "file:src/main/resources/com/serenki/art/projectiles/DefaultProjectile.png"));
     }
 
     public void update() {
@@ -54,7 +58,7 @@ public class Game {
             enemy.update();
             enemy.render(this.graphicsContext);
         }
-        for (GameObject missile : missiles) {
+        for (GameObject missile : projectiles) {
             missile.update();
             missile.render(this.graphicsContext);
         }

@@ -16,7 +16,7 @@ public abstract class Enemy extends GameObject {
 
     /**
      * @param position The exact position on the board. (Default: From 0.0 to 15.0, both x and y)
-     * @param speed The speed per second the enemy moves.
+     * @param speed The distance per second the enemy moves.
      * @param hitBoxRadius The radius of the circular hitbox of the enemy. (Used by missiles)
      * @param pathToImage
      * @param HP
@@ -92,7 +92,7 @@ public abstract class Enemy extends GameObject {
         move();
     }
 
-    public void move() {        //TODO
+    public void move() {
         Vector velocity = this.position.vectorTo(destination);
         velocity = velocity.normalize();
         velocity = velocity.multiply(speed);

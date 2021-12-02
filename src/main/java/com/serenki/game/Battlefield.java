@@ -23,6 +23,13 @@ public class Battlefield {
         background.render(PIXEL_POS, context);
     }
 
+    public static Vector getPositionFromPixPos(GridCoordinate pixPos) {
+        return null; //TODO
+    }
+
+    public static GridCoordinate getCoordinateFromPixPos(GridCoordinate pixPos) {
+        return null; //TODO
+    }
 
     /**
      * Dunno if I may ever change to something like that.

@@ -36,6 +36,10 @@ public class EnemiesManager {
         return enemies.get(i);
     }
 
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
     /**
      * Deletes all dead enemies, then updates and renders each one.
      */

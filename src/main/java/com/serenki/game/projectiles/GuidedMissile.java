@@ -8,7 +8,7 @@ public class GuidedMissile extends Projectile {
 
     private Enemy target;
     private int damage;
-    private boolean reachedTarget;
+
 
     /**
      *
@@ -19,26 +19,23 @@ public class GuidedMissile extends Projectile {
     public GuidedMissile(@NotNull Vector position, @NotNull Enemy target, int damage, double speed, @NotNull String pathToImage) {
         super(position, speed, pathToImage);
         this.target = target;
-        this.reachedTarget = false;
         this.damage = damage;
     }
 
     @Override
     public void move() {
         if (atTarget()) {
-            this.reachedTarget = true; //Ready to be deleted
+            this.reachedTarget(); //Ready to be deleted
             this.target.dealDamage(damage);
             return;
         }
         this.position = this.position.add(this.calculateVelocity());
     }
 
-    public boolean hasReachedTarget() {
-        return reachedTarget;
-    }
+
 
     private boolean atTarget() {
-        if (this.position.distanceToSquared(target.getPosition()) < 0.01)
+        if (this.position.distanceToSquared(target.getPosition()) < target.getHitBoxRadius() * target.getHitBoxRadius())
             return true;
         return false;
     }

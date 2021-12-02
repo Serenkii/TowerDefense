@@ -8,6 +8,7 @@ public abstract class Projectile extends GameObject {
 
     //distance per frame
     private double speed;
+    private boolean reachedTarget;
 
     /**
      *
@@ -17,6 +18,21 @@ public abstract class Projectile extends GameObject {
     public Projectile(Vector position, double speed, String pathToImage) {
         super(position, pathToImage);
         setSpeed(speed);
+    }
+
+    /**
+     *
+     * @return True if the projectile has reached its target, false if it has not.
+     */
+    public boolean hasReachedTarget() {
+        return reachedTarget;
+    }
+
+    /**
+     * Sets the boolean reachedTarget to true.
+     */
+    protected void reachedTarget() {
+        this.reachedTarget = true;
     }
 
     private void setSpeed(double speed) {

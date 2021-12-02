@@ -77,6 +77,9 @@ public abstract class Enemy extends GameObject {
             this.healthPoints = HP;
     }
 
+    public double getHitBoxRadius() {
+        return this.hitBoxRadius;
+    }
 
     /**
      * @param position The exact position on the board. (Default: From 0.0 to 15.0, both x and y)
@@ -91,6 +94,7 @@ public abstract class Enemy extends GameObject {
         setSpeed(speed);
         setHitBoxRadius(hitBoxRadius);
         setDestinationBasedOnStart(position);
+        setHealthPoints(1);
     }
 
     /**

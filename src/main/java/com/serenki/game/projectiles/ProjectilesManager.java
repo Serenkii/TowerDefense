@@ -30,6 +30,7 @@ public class ProjectilesManager {
      * Updates and renders every projectile
      */
     public void renderAndUpdate() {
+        projectiles.removeIf(projectile -> projectile.hasReachedTarget());
         for (Projectile projectile : projectiles) {
             projectile.update();
             projectile.render(this.graphicsContext);

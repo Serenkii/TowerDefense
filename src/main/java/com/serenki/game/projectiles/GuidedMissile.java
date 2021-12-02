@@ -7,6 +7,8 @@ import org.jetbrains.annotations.NotNull;
 public class GuidedMissile extends Projectile {
 
     private Enemy target;
+    private int damage;
+    private boolean reachedTarget;
 
     /**
      *
@@ -14,17 +16,25 @@ public class GuidedMissile extends Projectile {
      * @param speed       The distance per second the projectile moves.
      * @param pathToImage
      */
-    public GuidedMissile(@NotNull Vector position, @NotNull Enemy target, double speed, @NotNull String pathToImage) {
+    public GuidedMissile(@NotNull Vector position, @NotNull Enemy target, int damage, double speed, @NotNull String pathToImage) {
         super(position, speed, pathToImage);
         this.target = target;
+        this.reachedTarget = false;
+        this.damage = damage;
     }
 
     @Override
     public void move() {
         if (atTarget()) {
-            //do something
+            this.reachedTarget = true; //Ready to be deleted
+            this.target.dealDamage(damage);
+            return;
         }
         this.position = this.position.add(this.calculateVelocity());
+    }
+
+    public boolean hasReachedTarget() {
+        return reachedTarget;
     }
 
     private boolean atTarget() {

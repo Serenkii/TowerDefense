@@ -1,12 +1,15 @@
 package com.serenki.game;
 
 import com.serenki.game.enemies.Enemy;
+import com.serenki.game.projectiles.GuidedMissile;
 import com.serenki.game.projectiles.Missile;
 import com.serenki.game.projectiles.Projectile;
 import com.serenki.game.towers.Tower;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
+
+//TODO: Make classes "TowersManager", "EnemiesManager", "ProjectilesManager" instead of having all of that in one update() function here
 
 public class Game {
 
@@ -42,7 +45,10 @@ public class Game {
         });
 
         //test projectile
-        projectiles.add(new Missile(new Vector(0.5, 0.5), new Vector(14.5, 9.5), 5, "file:src/main/resources/com/serenki/art/projectiles/DefaultProjectile.png"));
+        projectiles.add(new Missile(new Vector(0.5, 0.5), new Vector(14.5, 9.5),
+                5, "file:src/main/resources/com/serenki/art/projectiles/DefaultProjectile.png"));
+        projectiles.add(new GuidedMissile(new Vector(0.5, 1.5), enemies.get(0),
+                10, 2, "file:src/main/resources/com/serenki/art/projectiles/DefaultProjectile.png"));
     }
 
     public void update() {

@@ -29,6 +29,16 @@ public abstract class Enemy extends GameObject {
         setHealthPoints(HP);
     }
 
+    public void dealDamage(int damagePoints) {
+        if (damagePoints <= 0)
+            return;
+        this.healthPoints -= damagePoints;
+    }
+
+    public boolean isAlive() {
+        return healthPoints > 0;
+    }
+
     private void setDestinationBasedOnStart(Vector position) {
         if (position.getX() < 0) {
             destination = new Vector(16, position.getY());

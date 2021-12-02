@@ -21,10 +21,11 @@ public class EnemiesManager {
 
     //TODO
     public ArrayList<Enemy> getTowersInArea(Vector position, double radius) {
+        ArrayList<Enemy> e = new ArrayList<>();
         for (Enemy enemy : enemies) {
 
         }
-        return null;
+        return e;
     }
 
     public void add(@NotNull Enemy enemy) {

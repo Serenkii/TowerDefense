@@ -35,6 +35,11 @@ public abstract class Enemy extends GameObject {
         this.healthPoints -= damagePoints;
     }
 
+    public boolean isInArea(Vector position, double radius) {
+        //TODO!
+        return false;
+    }
+
     public boolean isAlive() {
         return healthPoints > 0;
     }

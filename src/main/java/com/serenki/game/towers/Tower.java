@@ -62,6 +62,9 @@ public class Tower extends GameObject {
         this.position = new Vector(coordinate.getX() + 0.5, coordinate.getY() + 0.5);
     }
 
+    public GridCoordinate getCoordinate() {
+        return this.coordinate;
+    }
 
     public void findTarget() {
         for (Enemy enemy : this.listOfEnemies) {
@@ -114,6 +117,13 @@ public class Tower extends GameObject {
     public boolean isReady() {
         return this.cooldown <= 0;
     }
+
+
+
+
+
+
+
 
     public void renderRangeIndication(GraphicsContext context) {
         context.setFill(Color.rgb(50, 255, 200, 0.2));

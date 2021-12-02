@@ -40,8 +40,11 @@ public class TowersManager {
         }
     }
 
-    //TODO
     public Tower getTower(GridCoordinate position) {
+        for (Tower tower : towers) {
+            if (tower.getCoordinate().equals(position))
+                return tower;
+        }
         return null;
     }
 

@@ -32,13 +32,17 @@ public class Game {
         projectilesManager = new ProjectilesManager(this.graphicsContext);
 
         //test
-        towersManager.add(new Tower(new GridCoordinate(3, 3), 60, 2.0, enemiesManager.getEnemies(),
+    /*    towersManager.add(new Tower(new GridCoordinate(3, 3), 60, 2.0, enemiesManager.getEnemies(),
                 "file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));
         towersManager.add(new Tower(new GridCoordinate(1, 13), 60, 3.0, enemiesManager.getEnemies(),
                 "file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));
         towersManager.get(1).changeSelectionStatus();
         towersManager.add(new Tower(new GridCoordinate(13, 12), 60, 2.0, enemiesManager.getEnemies(),
-                "file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));
+                "file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));       */
+        towersManager.add(new Tower(new GridCoordinate(4, 5), 60, 3.0, enemiesManager.getEnemies(),
+                "file:src/main/resources/com/serenki/art/towers/FourwaysTower.png"));
+        towersManager.add(new Tower(new GridCoordinate(3, 12), 60, 2.0, enemiesManager.getEnemies(),
+                "file:src/main/resources/com/serenki/art/towers/FireCannon.png"));
 
         //test --- at least the enemy is moving I guess
         enemiesManager.add(new Enemy(new Vector(-1, 13.5), 1, 0.2, "file:src/main/resources/com/serenki/art/enemies/DefaultEnemy.png") {
@@ -47,9 +51,13 @@ public class Game {
 
         //test projectile
         projectilesManager.add(new Missile(new Vector(0.5, 0.5), new Vector(14.5, 9.5),
-                5, "file:src/main/resources/com/serenki/art/projectiles/DefaultProjectile.png"));
+                5, "file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
+        projectilesManager.add(new Missile(new Vector(0.5, 1.5), new Vector(14.5, 10.5),
+                5, "file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
+        projectilesManager.add(new Missile(new Vector(1.5, 0.5), new Vector(15.5, 9.5),
+                5, "file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
         projectilesManager.add(new GuidedMissile(new Vector(0.5, 1.5), enemiesManager.get(0),
-                10, 1.5, "file:src/main/resources/com/serenki/art/projectiles/DefaultProjectile.png"));
+                10, 1.5, "file:src/main/resources/com/serenki/art/projectiles/FireMissile.png"));
     }
 
     public void update() {

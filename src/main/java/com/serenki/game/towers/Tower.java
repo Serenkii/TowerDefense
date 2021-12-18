@@ -1,14 +1,15 @@
 package com.serenki.game.towers;
 
 import com.serenki.game.*;
+import com.serenki.game.enemies.EnemiesManager;
 import com.serenki.game.enemies.Enemy;
+import com.serenki.game.projectiles.ProjectilesManager;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.Shadow;
 import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-
-public class Tower extends GameObject {
+public abstract class Tower extends GameObject {
 
     private GridCoordinate coordinate;
     private final int COOLDOWN;
@@ -16,48 +17,47 @@ public class Tower extends GameObject {
     private double range;
     private boolean selected;
 
-    private ArrayList<Enemy> listOfEnemies;
-    private Enemy target;
+    private int cost;
 
-    /**
-     *
-     * @param coordinate The square the tower is standing on.
-     * @param cooldownInFrames The time duration the tower needs to reload in frames.
-     * @param range The maximum range the tower can shoot. (A range of 1 should be able to reach all squares +-x and +-y, that's why 0.5 is automatically added.)
-     * @param pathToPicture The path (String) to the picture. Example: "file:src/image.jpg"
-     */
-    public Tower (final GridCoordinate coordinate, final int cooldownInFrames, double range, ArrayList<Enemy> enemyList, String pathToPicture) {
-        super(pathToPicture, Battlefield.SQUARE_SIZE, Battlefield.SQUARE_SIZE);
+    protected final EnemiesManager enemiesManager;
 
-        this.setCoordinate(coordinate);
-        this.COOLDOWN = cooldownInFrames;
-        this.cooldown = 0;
-        this.range = range + 0.5;
-        this.selected = false;
-
-        this.listOfEnemies = enemyList;
+    protected Enemy getTarget() {
+        return target;
     }
 
+    private Enemy target;
+
+    protected final ProjectilesManager projectilesManager;
+
     /**
-     *
-     * @param coordinate The square the tower is standing on.
+     * Creates a new tower without a position yet.
      * @param cooldown The time duration the tower needs to reload in seconds.
      * @param range The maximum range the tower can shoot. (A range of 1 should be able to reach all squares +-x and +-y, that's why 0.5 is automatically added.)
+     * @param enemiesManager -
+     * @param projectilesManager -
      * @param pathToPicture The path (String) to the picture. Example: "file:src/image.jpg"
      */
-    public Tower (final GridCoordinate coordinate, final double cooldown, double range, ArrayList<Enemy> enemyList, String pathToPicture) {
+    public Tower (final int cost, final double cooldown, double range, EnemiesManager enemiesManager, ProjectilesManager projectilesManager, String pathToPicture) {
         super(pathToPicture, Battlefield.SQUARE_SIZE, Battlefield.SQUARE_SIZE);
 
-        this.setCoordinate(coordinate);
+        this.cost = cost;
+
         this.COOLDOWN = (int) (cooldown * Game.FRAME_RATE + 0.5);
         this.cooldown = 0;
         this.range = range + 0.5;
         this.selected = false;
 
-        this.listOfEnemies = enemyList;
+        this.enemiesManager = enemiesManager;
+
+        this.projectilesManager = projectilesManager;
     }
 
-    private void setCoordinate(final GridCoordinate coordinate) {
+    public int getCost() {
+        return cost;
+    }
+
+
+    public void setCoordinate(final GridCoordinate coordinate) {
         this.coordinate = new GridCoordinate(coordinate);
         this.position = new Vector(coordinate.getX() + 0.5, coordinate.getY() + 0.5);
     }
@@ -67,14 +67,7 @@ public class Tower extends GameObject {
     }
 
     public void findTarget() {
-        for (Enemy enemy : this.listOfEnemies) {
-            if (inRange(enemy)) {
-                this.target = enemy;
-                //System.out.println(this + " found an enemy");
-                return;
-            }
-        }
-        this.target = null;
+        this.target = enemiesManager.getOneEnemyInArea(this.position, this.range);
     }
 
     private boolean inRange(@NotNull Enemy enemy) {
@@ -87,7 +80,22 @@ public class Tower extends GameObject {
         shoot();
     }
 
-    public void shoot() {
+    public void renderTransparently(GraphicsContext context) {
+        Shadow effect = new Shadow();
+
+        context.setEffect(effect);
+        this.render(context);
+        context.setEffect(null);
+        /*this.render(context);
+        context.setFill(Color.rgb(0, 0, 255, 0.3));
+        context.fillRect(this.getCoordinate().getX() * Battlefield.SQUARE_SIZE, this.getCoordinate().getY() * Battlefield.SQUARE_SIZE,
+                Battlefield.SQUARE_SIZE, Battlefield.SQUARE_SIZE);*/
+    }
+
+    public abstract void shoot();
+
+
+/*    public void shoot() {
         updateCooldown();
         if (!isReady())
             return;
@@ -95,7 +103,7 @@ public class Tower extends GameObject {
         if (target != null) {
             System.out.println(this + ": SHOOT");
         }
-    }
+    } */
 
     public void reload() {
         this.cooldown = this.COOLDOWN;
@@ -112,6 +120,14 @@ public class Tower extends GameObject {
 
     public void changeSelectionStatus() {
         this.selected = !this.selected;
+    }
+
+    public void select() {
+        this.selected = true;
+    }
+
+    public void unselect() {
+        this.selected = false;
     }
 
     public boolean isReady() {
@@ -143,5 +159,54 @@ public class Tower extends GameObject {
                 (this.position.getY() * Battlefield.SQUARE_SIZE) - ((this.range * Battlefield.SQUARE_SIZE)),
                 this.range * Battlefield.SQUARE_SIZE * 2,
                 this.range * Battlefield.SQUARE_SIZE * 2);
+    }
+
+
+
+
+    /**
+     *
+     * @param coordinate The square the tower is standing on.
+     * @param cooldownInFrames The time duration the tower needs to reload in frames.
+     * @param range The maximum range the tower can shoot. (A range of 1 should be able to reach all squares +-x and +-y, that's why 0.5 is automatically added.)
+     * @param pathToPicture The path (String) to the picture. Example: "file:src/image.jpg"
+     * @deprecated
+     */
+    @Deprecated
+    public Tower (final GridCoordinate coordinate, final int cooldownInFrames, double range, EnemiesManager enemiesManager, ProjectilesManager projectilesManager, String pathToPicture) {
+        super(pathToPicture, Battlefield.SQUARE_SIZE, Battlefield.SQUARE_SIZE);
+
+        this.setCoordinate(coordinate);
+        this.COOLDOWN = cooldownInFrames;
+        this.cooldown = 0;
+        this.range = range + 0.5;
+        this.selected = false;
+
+        this.enemiesManager = enemiesManager;
+
+        this.projectilesManager = projectilesManager;
+    }
+
+    /**
+     *
+     * @param coordinate The square the tower is standing on.
+     * @param cooldown The time duration the tower needs to reload in seconds.
+     * @param range The maximum range the tower can shoot. (A range of 1 should be able to reach all squares +-x and +-y, that's why 0.5 is automatically added.)
+     * @param pathToPicture The path (String) to the picture. Example: "file:src/image.jpg"
+     * @deprecated
+     */
+    @Deprecated
+    public Tower (final GridCoordinate coordinate, final double cooldown, double range, EnemiesManager enemiesManager, ProjectilesManager projectilesManager, String pathToPicture) {
+        super(pathToPicture, Battlefield.SQUARE_SIZE, Battlefield.SQUARE_SIZE);
+
+        this.setCoordinate(coordinate);
+        this.COOLDOWN = (int) (cooldown * Game.FRAME_RATE + 0.5);
+        this.cooldown = 0;
+        this.range = range + 0.5;
+        this.selected = false;
+
+        this.enemiesManager = enemiesManager;
+
+        this.projectilesManager = projectilesManager;
     }
 }

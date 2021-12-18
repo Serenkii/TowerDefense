@@ -19,11 +19,20 @@ public class EnemiesManager {
         this.graphicsContext = graphicsContext;
     }
 
-    //TODO
-    public ArrayList<Enemy> getTowersInArea(Vector position, double radius) {
+    public Enemy getOneEnemyInArea(Vector position, double radius) {
+        for (Enemy enemy : enemies) {
+            if (position.distanceToSquared(enemy.getPosition()) <= radius * radius)
+                return enemy;
+        }
+        return null;
+    }
+
+    public ArrayList<Enemy> getEnemiesInArea(Vector position, double radius) {
         ArrayList<Enemy> e = new ArrayList<>();
         for (Enemy enemy : enemies) {
-
+            if (position.distanceToSquared(enemy.getPosition()) <= radius * radius) {
+                e.add(enemy);
+            }
         }
         return e;
     }
@@ -34,10 +43,6 @@ public class EnemiesManager {
 
     public Enemy get(int i) {
         return enemies.get(i);
-    }
-
-    public ArrayList<Enemy> getEnemies() {
-        return enemies;
     }
 
     /**

@@ -23,12 +23,17 @@ public class Battlefield {
         background.render(PIXEL_POS, context);
     }
 
+    /**
+     * TODO!
+     * @param pixPos
+     * @return
+     */
     public static Vector getPositionFromPixPos(GridCoordinate pixPos) {
         return null; //TODO
     }
 
     public static GridCoordinate getCoordinateFromPixPos(GridCoordinate pixPos) {
-        return null; //TODO
+        return new GridCoordinate((int) pixPos.getX() / SQUARE_SIZE, (int) pixPos.getY() / SQUARE_SIZE);
     }
 
     /**

@@ -36,6 +36,10 @@ public class Sprite {
         context.drawImage(this.image, pixelCoordinate.getX(), pixelCoordinate.getY());
     }
 
+    public Image getImage() {
+        return image;
+    }
+
     public double getWidth() {
         return image.getWidth();
     }

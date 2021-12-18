@@ -1,11 +1,10 @@
 package com.serenki.game;
 
 import com.serenki.game.enemies.EnemiesManager;
-import com.serenki.game.enemies.Enemy;
-import com.serenki.game.projectiles.GuidedMissile;
-import com.serenki.game.projectiles.Missile;
+import com.serenki.game.enemies.Soldier;
 import com.serenki.game.projectiles.ProjectilesManager;
-import com.serenki.game.towers.Tower;
+import com.serenki.game.towers.FireCannon;
+import com.serenki.game.towers.QuadrupleShooter;
 import com.serenki.game.towers.TowersManager;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -22,6 +21,8 @@ public class Game {
 
     private Battlefield battlefield;
 
+    Player player;
+
     public Game(GraphicsContext graphicsContextOfCanvas) {
         this.graphicsContext = graphicsContextOfCanvas;
 
@@ -31,6 +32,9 @@ public class Game {
         enemiesManager = new EnemiesManager(this.graphicsContext);
         projectilesManager = new ProjectilesManager(this.graphicsContext);
 
+        player = new Player(this.graphicsContext.getCanvas(), this.towersManager);
+
+
         //test
     /*    towersManager.add(new Tower(new GridCoordinate(3, 3), 60, 2.0, enemiesManager.getEnemies(),
                 "file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));
@@ -39,25 +43,19 @@ public class Game {
         towersManager.get(1).changeSelectionStatus();
         towersManager.add(new Tower(new GridCoordinate(13, 12), 60, 2.0, enemiesManager.getEnemies(),
                 "file:src/main/resources/com/serenki/art/towers/DefaultTower1.jpg"));       */
-        towersManager.add(new Tower(new GridCoordinate(4, 5), 60, 3.0, enemiesManager.getEnemies(),
-                "file:src/main/resources/com/serenki/art/towers/FourwaysTower.png"));
-        towersManager.add(new Tower(new GridCoordinate(3, 12), 60, 2.0, enemiesManager.getEnemies(),
-                "file:src/main/resources/com/serenki/art/towers/FireCannon.png"));
+        towersManager.add(new QuadrupleShooter(new GridCoordinate(5, 8), enemiesManager, projectilesManager));
+        towersManager.add(new FireCannon(new GridCoordinate(3, 12), enemiesManager, projectilesManager));
+        towersManager.get(1).changeSelectionStatus();
 
         //test --- at least the enemy is moving I guess
-        enemiesManager.add(new Enemy(new Vector(-1, 13.5), 1, 0.2, "file:src/main/resources/com/serenki/art/enemies/DefaultEnemy.png") {
+        enemiesManager.add(new Soldier(new Vector(-1, 10.5)));
+        enemiesManager.add(new Soldier(new Vector(-2, 10.5)));
+        enemiesManager.add(new Soldier(new Vector(-3, 10.5)));
+        enemiesManager.add(new Soldier(new Vector(-4, 10.5)));
+        enemiesManager.add(new Soldier(new Vector(-5, 10.5)));
 
-        });
 
-        //test projectile
-        projectilesManager.add(new Missile(new Vector(0.5, 0.5), new Vector(14.5, 9.5),
-                5, "file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
-        projectilesManager.add(new Missile(new Vector(0.5, 1.5), new Vector(14.5, 10.5),
-                5, "file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
-        projectilesManager.add(new Missile(new Vector(1.5, 0.5), new Vector(15.5, 9.5),
-                5, "file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
-        projectilesManager.add(new GuidedMissile(new Vector(0.5, 1.5), enemiesManager.get(0),
-                10, 1.5, "file:src/main/resources/com/serenki/art/projectiles/FireMissile.png"));
+        player.setTowerToPlace(new QuadrupleShooter(this.enemiesManager, this.projectilesManager));
     }
 
     public void update() {
@@ -66,5 +64,6 @@ public class Game {
         enemiesManager.renderAndUpdate();
         projectilesManager.renderAndUpdate();
         towersManager.renderSelectedTower();
+        player.renderTower();
     }
 }

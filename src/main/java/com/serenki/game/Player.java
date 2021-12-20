@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 public class Player {
 
     private int money;
+    private int healthPoints;
     @Nullable private Tower towerToPlace;
 
     private int mouseX;
@@ -22,7 +23,8 @@ public class Player {
     private Canvas canvas;
 
     public Player (Canvas canvas, TowersManager towersManager) {
-        this.money = 999999;
+        this.money = 2000;
+        this.healthPoints = 50;
         this.towersManager = towersManager;
         this.canvas = canvas;
 
@@ -62,6 +64,14 @@ public class Player {
         });
 
         this.towerToPlace = null;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public int getHealthPoints() {
+        return healthPoints;
     }
 
     /**

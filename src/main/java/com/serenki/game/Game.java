@@ -1,5 +1,6 @@
 package com.serenki.game;
 
+import com.serenki.game.UI.GameWindowController;
 import com.serenki.game.enemies.EnemiesManager;
 import com.serenki.game.enemies.Soldier;
 import com.serenki.game.projectiles.ProjectilesManager;
@@ -21,10 +22,14 @@ public class Game {
 
     private Battlefield battlefield;
 
-    Player player;
+    private Player player;
 
-    public Game(GraphicsContext graphicsContextOfCanvas) {
-        this.graphicsContext = graphicsContextOfCanvas;
+    private GameWindowController gameWindowController;
+
+    public Game(GameWindowController gameWindowController) {
+        this.gameWindowController = gameWindowController;
+
+        this.graphicsContext = this.gameWindowController.getGraphicsContextOfCanvas();
 
         this.battlefield = new Battlefield();
 
@@ -34,6 +39,7 @@ public class Game {
 
         player = new Player(this.graphicsContext.getCanvas(), this.towersManager);
 
+        gameWindowController.initializeManually(this.player, enemiesManager, projectilesManager);
 
         //test
     /*    towersManager.add(new Tower(new GridCoordinate(3, 3), 60, 2.0, enemiesManager.getEnemies(),
@@ -48,11 +54,9 @@ public class Game {
         towersManager.get(1).changeSelectionStatus();
 
         //test --- at least the enemy is moving I guess
-        enemiesManager.add(new Soldier(new Vector(-1, 10.5)));
-        enemiesManager.add(new Soldier(new Vector(-2, 10.5)));
-        enemiesManager.add(new Soldier(new Vector(-3, 10.5)));
-        enemiesManager.add(new Soldier(new Vector(-4, 10.5)));
-        enemiesManager.add(new Soldier(new Vector(-5, 10.5)));
+        for (int i = -20; i > -100; i--) {
+            enemiesManager.add(new Soldier(new Vector(i, Math.random() * 15)));
+        }
 
 
         player.setTowerToPlace(new QuadrupleShooter(this.enemiesManager, this.projectilesManager));
@@ -65,5 +69,6 @@ public class Game {
         projectilesManager.renderAndUpdate();
         towersManager.renderSelectedTower();
         player.renderTower();
+        gameWindowController.updateDisplays();
     }
 }

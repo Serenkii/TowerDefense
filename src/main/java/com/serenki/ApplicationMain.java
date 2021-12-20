@@ -7,7 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,16 +18,15 @@ public class ApplicationMain extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        //No way this just worked first try :D
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("game-window.fxml"));
 
-        HBox root = fxmlLoader.load();
+        Pane root = fxmlLoader.load();
 
         Scene scene = new Scene(root, 1920, 1080);
 
         GameWindowController gameWindowController = fxmlLoader.getController();
 
-        game = new Game(gameWindowController.getGraphicsContextOfCanvas());
+        game = new Game(gameWindowController);
 
         stage.setTitle("Serenki's Tower Defense Game");
         stage.setScene(scene);

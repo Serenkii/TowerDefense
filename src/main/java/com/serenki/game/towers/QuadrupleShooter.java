@@ -8,6 +8,7 @@ import com.serenki.game.projectiles.ProjectilesManager;
 
 public class QuadrupleShooter extends Tower {
 
+    @Deprecated
     public QuadrupleShooter(GridCoordinate coordinate, EnemiesManager enemiesManager, ProjectilesManager projectilesManager) {
         super(coordinate, 0.8d, 3, enemiesManager, projectilesManager, "file:src/main/resources/com/serenki/art/towers/QuadrupleShooter.png");
     }

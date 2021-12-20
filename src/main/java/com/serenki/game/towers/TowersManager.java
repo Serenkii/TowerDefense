@@ -19,9 +19,12 @@ public class TowersManager {
     private ArrayList<Tower> towers;
     private Tower selectedTower;
 
+    private MediaPlayer placingSoundPlayer;
+
     public TowersManager(GraphicsContext graphicsContext) {
         towers = new ArrayList<>();
         this.graphicsContext = graphicsContext;
+        initiatePlacingSoundPlayer();
     }
 
     /**
@@ -44,14 +47,14 @@ public class TowersManager {
         }
         tower.setCoordinate(gridCoordinate);
         this.towers.add(tower);
-        playPlacingSound();
+        initiatePlacingSoundPlayer();       //WHY DO I NEED THIS???
+        this.placingSoundPlayer.play();
         return true;
     }
 
-    private void playPlacingSound() {
+    private void initiatePlacingSoundPlayer() {
         Media sound = new Media(new File("src/main/resources/com/serenki/art/towers/placing.wav").toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
+        this.placingSoundPlayer = new MediaPlayer(sound);
     }
 
     /**

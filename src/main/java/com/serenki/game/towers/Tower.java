@@ -80,30 +80,16 @@ public abstract class Tower extends GameObject {
         shoot();
     }
 
-    public void renderTransparently(GraphicsContext context) {
+    public void renderShadow(GraphicsContext context) {
         Shadow effect = new Shadow();
 
         context.setEffect(effect);
         this.render(context);
         context.setEffect(null);
-        /*this.render(context);
-        context.setFill(Color.rgb(0, 0, 255, 0.3));
-        context.fillRect(this.getCoordinate().getX() * Battlefield.SQUARE_SIZE, this.getCoordinate().getY() * Battlefield.SQUARE_SIZE,
-                Battlefield.SQUARE_SIZE, Battlefield.SQUARE_SIZE);*/
     }
 
     public abstract void shoot();
 
-
-/*    public void shoot() {
-        updateCooldown();
-        if (!isReady())
-            return;
-        reload();
-        if (target != null) {
-            System.out.println(this + ": SHOOT");
-        }
-    } */
 
     public void reload() {
         this.cooldown = this.COOLDOWN;

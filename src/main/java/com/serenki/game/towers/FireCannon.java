@@ -7,6 +7,7 @@ import com.serenki.game.projectiles.GuidedMissile;
 import com.serenki.game.projectiles.ProjectilesManager;
 
 public class FireCannon extends Tower{
+    @Deprecated
     public FireCannon(GridCoordinate coordinate, EnemiesManager enemiesManager, ProjectilesManager projectilesManager) {
         super(coordinate, 2.0d, 2, enemiesManager, projectilesManager, "file:src/main/resources/com/serenki/art/towers/FireCannon.png");
     }

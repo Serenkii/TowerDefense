@@ -30,7 +30,7 @@ public class ApplicationMain extends Application {
 
         game = new Game(graphicsContext);
 
-        stage.setTitle("Hello!");
+        stage.setTitle("Serenki's Tower Defense Game");
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);

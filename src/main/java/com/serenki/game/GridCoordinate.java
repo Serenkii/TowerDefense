@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class GridCoordinate {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     public GridCoordinate(int x, int y) {
         this.x = x;

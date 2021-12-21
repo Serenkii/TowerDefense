@@ -111,4 +111,8 @@ public class TowersManager {
         selectedTower.render(this.graphicsContext);
         selectedTower.renderRangeIndication(this.graphicsContext);
     }
+
+    public int towerCount() {
+        return this.towers.size();
+    }
 }

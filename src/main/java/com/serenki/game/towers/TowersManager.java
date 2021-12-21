@@ -35,14 +35,10 @@ public class TowersManager {
      */
     public boolean placeTower(@NotNull Tower tower, @NotNull GridCoordinate gridCoordinate) {
         if (this.getTower(gridCoordinate) != null) {
-            System.out.println(1);
             return false;
         }
-        System.out.println(gridCoordinate.getX());
-        System.out.println(gridCoordinate.getY());
         if (gridCoordinate.getX() < Battlefield.EDGE_SIZE || gridCoordinate.getX() >= Battlefield.GRID_SIZE - Battlefield.EDGE_SIZE ||
                 gridCoordinate.getY() < Battlefield.EDGE_SIZE || gridCoordinate.getY() >= Battlefield.GRID_SIZE - Battlefield.EDGE_SIZE) {
-            System.out.println(2);
             return false;
         }
         tower.setCoordinate(gridCoordinate);
@@ -84,8 +80,20 @@ public class TowersManager {
     }
 
     public void unselectAll() {
+        this.selectedTower = null;
         for (Tower tower : towers) {
             tower.unselect();
+        }
+    }
+
+    public void selectTower(GridCoordinate coordinate) {
+        this.selectedTower = null;
+        for (Tower tower : towers) {
+            tower.unselect();
+            if (tower.getCoordinate().equals(coordinate)) {
+                tower.select();
+                this.selectedTower = tower;
+            }
         }
     }
 

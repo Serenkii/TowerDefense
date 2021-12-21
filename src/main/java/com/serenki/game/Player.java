@@ -32,7 +32,10 @@ public class Player {
             @Override
             public void handle(KeyEvent keyEvent) {
                 switch (keyEvent.getCode()) {
-                    case ESCAPE -> towerToPlace = null;
+                    case ESCAPE -> {
+                        towerToPlace = null;
+                        towersManager.unselectAll();
+                    }
                     case DIGIT1 -> towerToPlace = new Barrier();
                 }
             }
@@ -51,19 +54,28 @@ public class Player {
             public void handle(MouseEvent mouseEvent) {
 
                 if (towerToPlace == null) {
+                    trySelectingTower(mouseEvent);
                     return;
                 }
-                if (money < towerToPlace.getCost()) {
-                    return;
-                }
-                if(towersManager.placeTower(towerToPlace, Battlefield.getCoordinateFromPixPos(new GridCoordinate((int) mouseEvent.getX(), (int) mouseEvent.getY()))) == true) {
-                    changeMoneyBy(-towerToPlace.getCost());
-                }
-                towerToPlace = null;
+                tryPlacingTower(mouseEvent);
             }
         });
 
         this.towerToPlace = null;
+    }
+
+    private void tryPlacingTower(MouseEvent mouseEvent) {
+        if (money < towerToPlace.getCost()) {
+            return;
+        }
+        if(towersManager.placeTower(towerToPlace, Battlefield.getCoordinateFromPixPos(new GridCoordinate((int) mouseEvent.getX(), (int) mouseEvent.getY()))) == true) {
+            changeMoneyBy(-towerToPlace.getCost());
+        }
+        towerToPlace = null;
+    }
+
+    private void trySelectingTower(MouseEvent mouseEvent) {
+        towersManager.selectTower(Battlefield.getCoordinateFromPixPos(new GridCoordinate((int) mouseEvent.getX(), (int) mouseEvent.getY())));
     }
 
     public int getMoney() {

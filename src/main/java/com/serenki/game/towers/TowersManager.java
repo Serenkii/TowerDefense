@@ -2,6 +2,8 @@ package com.serenki.game.towers;
 
 import com.serenki.game.Battlefield;
 import com.serenki.game.GridCoordinate;
+import com.serenki.game.enemies.EnemiesManager;
+import com.serenki.game.pathfinding.Pathfinding;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -19,12 +21,24 @@ public class TowersManager {
     private ArrayList<Tower> towers;
     private Tower selectedTower;
 
+    private EnemiesManager enemiesManager;
+
     private MediaPlayer placingSoundPlayer;
+
+    private Pathfinding pathfinding;
 
     public TowersManager(GraphicsContext graphicsContext) {
         towers = new ArrayList<>();
         this.graphicsContext = graphicsContext;
         initiatePlacingSoundPlayer();
+    }
+
+    public void setEnemiesManager(EnemiesManager enemiesManager) {
+        this.enemiesManager = enemiesManager;
+    }
+
+    public void setPathfinding(@NotNull Pathfinding pathfinding) {
+        this.pathfinding = pathfinding;
     }
 
     /**
@@ -45,6 +59,14 @@ public class TowersManager {
         this.towers.add(tower);
         initiatePlacingSoundPlayer();       //WHY DO I NEED THIS???
         this.placingSoundPlayer.play();
+
+        pathfinding.getGrid().updateForNewTowers(this);
+        if (enemiesManager == null) {
+            System.err.println("enemiesManager was never initiated in this TowersManager - You need to call the setEnemiesManager()-method!");
+            return true;
+        }
+        enemiesManager.findNewPaths();
+
         return true;
     }
 

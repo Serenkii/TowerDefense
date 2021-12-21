@@ -5,7 +5,7 @@ import com.serenki.game.Vector;
 
 public class Node {
 
-    private boolean edge;
+    private int edgeWeight;
     private boolean walkable;
     private Vector position;
 
@@ -26,6 +26,7 @@ public class Node {
         this.position = new Vector(position.getX() + 0.5, position.getY() + 0.5);
         this.gridX = position.getX();
         this.gridY = position.getY();
+        this.edgeWeight = 0;
     }
 
     /**
@@ -34,7 +35,7 @@ public class Node {
      */
     public Node(GridCoordinate position) {
         this.walkable = true;
-        this.edge = true;
+        this.edgeWeight = 500;
         this.position = new Vector(position.getX() + 0.5, position.getY() + 0.5);
         this.gridX = position.getX();
         this.gridY = position.getY();
@@ -49,15 +50,15 @@ public class Node {
     }
 
     public int fCost() {
-        return gCost + hCost;
+        return gCost() + hCost();
     }
 
     public int gCost() {
-        return gCost;
+        return gCost + edgeWeight;
     }
 
     public int hCost() {
-        return hCost;
+        return hCost + edgeWeight;
     }
 
     public int getGridX() {
@@ -78,5 +79,9 @@ public class Node {
 
     public void setParent(Node parent) {
         this.parent = parent;
+    }
+
+    public Vector getPosition() {
+        return position;
     }
 }

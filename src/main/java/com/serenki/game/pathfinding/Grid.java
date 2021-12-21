@@ -37,9 +37,10 @@ public class Grid {
     private Node[][] grid;
 
 
-    public Grid() {
-        this.grid = new Node[Battlefield.GRID_SIZE][Battlefield.GRID_SIZE];
+    public Grid(TowersManager towersManager) {
+        this.grid = new Node[Battlefield.GRID_SIZE + 1][Battlefield.GRID_SIZE + 1];
         initializeGrid();
+        updateForNewTowers(towersManager);
     }
 
     private void initializeGrid() {

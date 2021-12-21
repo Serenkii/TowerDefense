@@ -4,8 +4,8 @@ import com.serenki.game.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
+import java.util.Stack;
 
 public class Pathfinding {
 
@@ -15,7 +15,11 @@ public class Pathfinding {
         this.grid = grid;
     }
 
-    public void findPath(@NotNull final Vector startPosition, @NotNull final Vector targetPosition) {
+    public Grid getGrid() {
+        return grid;
+    }
+
+    public Stack<Node> findPath(@NotNull final Vector startPosition, @NotNull final Vector targetPosition) {
         Node startNode = grid.getNodeFromPosition(startPosition);
         Node targetNode = grid.getNodeFromPosition(targetPosition);
 
@@ -35,8 +39,7 @@ public class Pathfinding {
             closedSet.add(currentNode);
 
             if (currentNode == targetNode) {
-                retracePath(startNode, targetNode);
-                return;
+                return retracePath(startNode, targetNode);
             }
 
             for (Node neighbour : grid.getNeighbours(currentNode)) {
@@ -56,10 +59,12 @@ public class Pathfinding {
                 }
             }
         }
+
+        return null;
     }
 
-    public void retracePath(Node startNode, Node endNode) {
-        ArrayList<Node> path = new ArrayList<Node>();
+    public Stack<Node> retracePath(Node startNode, Node endNode) {
+        Stack<Node> path = new Stack<Node>();
         Node currentNode = endNode;
 
         while (currentNode != startNode) {          //!= instead of !equals() should work because they should be at the same position in memory
@@ -67,7 +72,7 @@ public class Pathfinding {
             currentNode = currentNode.getParent();
         }
 
-        Collections.reverse(path);
+        return path;
     }
 
     public int getDistance(Node node1, Node node2) {

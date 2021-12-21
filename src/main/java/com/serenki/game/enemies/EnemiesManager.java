@@ -1,10 +1,12 @@
 package com.serenki.game.enemies;
 
+import com.serenki.game.Player;
 import com.serenki.game.Vector;
 import javafx.scene.canvas.GraphicsContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 //In theory, I could make one superclass with generics or something, but imo this is easier
 
@@ -12,10 +14,13 @@ public class EnemiesManager {
 
     private GraphicsContext graphicsContext;
 
+    private final Player player;
+
     private ArrayList<Enemy> enemies;
 
-    public EnemiesManager(GraphicsContext graphicsContext) {
+    public EnemiesManager(GraphicsContext graphicsContext, Player player) {
         enemies = new ArrayList<>();
+        this.player = player;
         this.graphicsContext = graphicsContext;
     }
 
@@ -37,6 +42,12 @@ public class EnemiesManager {
         return e;
     }
 
+    public void findNewPaths() {
+        for (Enemy enemy : enemies) {
+            enemy.findPath();
+        }
+    }
+
     public void add(@NotNull Enemy enemy) {
         this.enemies.add(enemy);
     }
@@ -46,10 +57,20 @@ public class EnemiesManager {
     }
 
     /**
-     * Deletes all dead enemies, then updates and renders each one.
+     * Takes care of all dead enemies and enemies that reached their target, then updates and renders the remaining ones.
      */
-    public void renderAndUpdate() {
-        enemies.removeIf(enemy -> !enemy.isAlive());        //some weird shit I don't understand (Predicates and stuff?)
+    public void renderAndUpdate() {             //https://stackoverflow.com/questions/9691328/removing-object-from-arraylist-in-for-each-loop
+        for (Iterator<Enemy> iterator = enemies.iterator(); iterator.hasNext();) {
+            Enemy e = iterator.next();
+            if (!e.isAlive()) {
+                this.player.changeMoneyBy(e.getMoneyValue());
+                iterator.remove();
+            }
+            else if (e.reachedDestination()) {
+                this.player.changeHealthPointsBy(-e.getDamageValue());
+                iterator.remove();
+            }
+        }
         for (Enemy enemy : enemies) {
             enemy.update();
             enemy.render(this.graphicsContext);

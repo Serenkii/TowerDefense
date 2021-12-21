@@ -23,7 +23,7 @@ public class Player {
     private Canvas canvas;
 
     public Player (Canvas canvas, TowersManager towersManager) {
-        this.money = 2000;
+        this.money = 99999;
         this.healthPoints = 50;
         this.towersManager = towersManager;
         this.canvas = canvas;
@@ -92,6 +92,10 @@ public class Player {
      */
     public void changeMoneyBy(int value) {
         this.money += value;
+    }
+
+    public void changeHealthPointsBy(int value) {
+        this.healthPoints += value;
     }
 
     public void setTowerToPlace(Tower towerToPlace) {

@@ -29,6 +29,10 @@ public class LevelManager {
         }
     }
 
+    public boolean nextLevelAvailable() {
+        return !this.levels.isEmpty() && !this.levels.peek().isRunning();
+    }
+
     public boolean startNextLevel() {
         if (this.levels.isEmpty() || this.levels.peek().isRunning())
             return false;

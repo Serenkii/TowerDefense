@@ -23,14 +23,27 @@ public class GameWindowController {
     @FXML
     private Label moneyDisplay;
 
+    @FXML
+    private Label levelDisplay;
+
+    @FXML
+    private Label nextLevelButton;
+
+
     public void updateDisplays() {
         moneyDisplay.setText(this.game.getPlayer().getMoney() + "$");
         healthDisplay.setText(this.game.getPlayer().getHealthPoints() + "♥");
+        levelDisplay.setText("Level " + this.game.getLevelManager().getLevel());
+        if (game.getLevelManager().nextLevelAvailable())
+            nextLevelButton.setText("nächstes Level");
+        else
+            nextLevelButton.setText("");
     }
 
     public GraphicsContext getGraphicsContextOfCanvas() {
         return battlefieldCanvas.getGraphicsContext2D();
     }
+
 
     public void initializeManually(@NotNull final Game game) {
         this.game = game;
@@ -57,5 +70,9 @@ public class GameWindowController {
 
     public void pickUpSniper(MouseEvent mouseEvent) {
         game.getPlayer().setTowerToPlace(new Sniper(this.game.getEnemiesManager(), this.game.getProjectilesManager()));
+    }
+
+    public void startNextLevel(MouseEvent mouseEvent) {
+        game.getLevelManager().startNextLevel();
     }
 }

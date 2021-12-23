@@ -23,16 +23,23 @@ public class Player {
 
     private Canvas canvas;
 
+    private String cheatCode;
+    private boolean usedCheat;
+
     public Player (@NotNull final Game game) {
-        this.money = 100;
+        this.money = 100000;
         this.healthPoints = 50;
         this.game = game;
         this.towersManager = game.getTowersManager();
         this.canvas = game.getCanvas();
 
+        this.cheatCode = "";
+        usedCheat = false;
+
         this.canvas.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
+                cheatCode(keyEvent.getText());
                 switch (keyEvent.getCode()) {
                     case ESCAPE -> {
                         towerToPlace = null;
@@ -45,6 +52,7 @@ public class Player {
                     case DIGIT5 -> towerToPlace = new Cannon(game.getEnemiesManager(), game.getProjectilesManager());
 
                     case F1 ->  game.getLevelManager().startNextLevel();
+
                 }
             }
         });
@@ -81,6 +89,7 @@ public class Player {
         }
         towerToPlace = null;
     }
+
 
     private void trySelectingTower(MouseEvent mouseEvent) {
         towersManager.selectTower(Battlefield.getCoordinateFromPixPos(new GridCoordinate((int) mouseEvent.getX(), (int) mouseEvent.getY())));
@@ -119,5 +128,24 @@ public class Player {
         towerToPlace.setCoordinate(Battlefield.getCoordinateFromPixPos(new GridCoordinate(this.mouseX, this.mouseY)));
         towerToPlace.renderShadow(canvas.getGraphicsContext2D());
         towerToPlace.renderRangeIndication(canvas.getGraphicsContext2D());
+    }
+
+
+    /**
+     * The player receives a lot of money once they typed "MARIAN" (with caps).
+     * @param character The character the player typed (pressed).
+     */
+    private void cheatCode(String character) {
+        if (usedCheat)
+            return;
+        this.cheatCode = this.cheatCode + character;
+        if (!(cheatCode.equals("M") || cheatCode.equals("MA") || cheatCode.equals("MAR") || cheatCode.equals("MARI") || cheatCode.equals("MARIA") || cheatCode.equals("MARIAN"))) {
+            cheatCode = "";
+            return;
+        }
+        if (cheatCode.equals("MARIAN")) {
+            this.money = Integer.MAX_VALUE - 10000;
+            usedCheat = true;
+        }
     }
 }

@@ -19,7 +19,7 @@ public class Sniper extends Tower{
         if (getTarget() == null)
             return;
         this.projectilesManager.add(new GuidedMissile(this.position.add(new Vector(0.35, 0)), this.getTarget(),
-                200, 8, "file:src/main/resources/com/serenki/art/projectiles/SniperMissile.png"));
+                200, 8, true, "file:src/main/resources/com/serenki/art/projectiles/SniperMissile.png"));
         reload();
     }
 }

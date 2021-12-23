@@ -16,8 +16,8 @@ public class GuidedMissile extends Projectile {
      * @param speed       The distance per second the projectile moves.
      * @param pathToImage
      */
-    public GuidedMissile(@NotNull Vector position, @NotNull Enemy target, int damage, double speed, @NotNull String pathToImage) {
-        super(position, speed, pathToImage);
+    public GuidedMissile(@NotNull Vector position, @NotNull Enemy target, int damage, double speed, boolean rotatableProjectile, @NotNull String pathToImage) {
+        super(position, speed, rotatableProjectile, pathToImage);
         this.target = target;
         this.damage = damage;
     }
@@ -30,6 +30,8 @@ public class GuidedMissile extends Projectile {
             return;
         }
         this.position = this.position.add(this.calculateVelocity());
+        if (isRotatableProjectile())
+            this.sprite.setRotationAngle(position.vectorTo(target.getPosition()));
     }
 
 

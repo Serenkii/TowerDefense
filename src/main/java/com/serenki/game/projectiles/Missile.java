@@ -18,10 +18,12 @@ public class Missile extends Projectile {
      * @param speed       The distance per second the projectile moves.
      * @param pathToImage
      */
-    public Missile(@NotNull Vector position, @NotNull Vector targetPos, double speed, @NotNull String pathToImage) {
-        super(position, speed, pathToImage);
+    public Missile(@NotNull Vector position, @NotNull Vector targetPos, double speed, boolean rotatableProjectile, @NotNull String pathToImage) {
+        super(position, speed, rotatableProjectile, pathToImage);
         this.targetPosition = targetPos;
         this.calculateVelocity();
+        if (isRotatableProjectile())
+            this.sprite.setRotationAngle(velocity);
     }
 
     private void calculateVelocity() {

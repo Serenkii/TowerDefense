@@ -18,7 +18,7 @@ public class Cannon extends Tower {
         if (getTarget() == null)
             return;
         this.projectilesManager.add(new GuidedMissile(this.position.add(new Vector(0.4, -0.4)), this.getTarget(),
-                150, 4, "file:src/main/resources/com/serenki/art/projectiles/FireMissile.png"));
+                150, 4, false, "file:src/main/resources/com/serenki/art/projectiles/FireMissile.png"));
         reload();
     }
 }

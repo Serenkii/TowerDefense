@@ -31,10 +31,6 @@ public abstract class GameObject {
         return position;
     }
 
-    protected void changeRotation(double degrees) {
-        this.sprite.changeImageRotationTo(degrees);
-    }
-
     public void render(GraphicsContext context) {
         sprite.render(position, context);
     }

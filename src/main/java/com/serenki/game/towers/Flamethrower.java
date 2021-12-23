@@ -24,7 +24,7 @@ public class Flamethrower extends Tower{
         if (getTarget() == null)
             return;
         this.projectilesManager.add(new GuidedMissile(this.position.add(new Vector(0.35, 0)), this.getTarget(),
-                1, 3, "file:src/main/resources/com/serenki/art/projectiles/Flame.png"));
+                1, 3, false,"file:src/main/resources/com/serenki/art/projectiles/Flame.png"));
     }
 }
 

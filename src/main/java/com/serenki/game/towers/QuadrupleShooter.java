@@ -25,13 +25,13 @@ public class QuadrupleShooter extends Tower {
         if (getTarget() == null)
             return;
         this.projectilesManager.add(new GuidedMissile(this.position.add(new Vector(0.4, 0)), this.getTarget(),
-                5, 4, "file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
+                5, 4, false,"file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
         this.projectilesManager.add(new GuidedMissile(this.position.add(new Vector(-0.4, 0)), this.getTarget(),
-                5, 4, "file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
+                5, 4, false,"file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
         this.projectilesManager.add(new GuidedMissile(this.position.add(new Vector(0, 0.4)), this.getTarget(),
-                5, 4, "file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
+                5, 4, false,"file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
         this.projectilesManager.add(new GuidedMissile(this.position.add(new Vector(0, -0.4)), this.getTarget(),
-                5, 4, "file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
+                5, 4, false,"file:src/main/resources/com/serenki/art/projectiles/SpikeMissile.png"));
         reload();
     }
 }

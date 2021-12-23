@@ -6,18 +6,20 @@ import com.serenki.game.Vector;
 
 public abstract class Projectile extends GameObject {
 
-    //distance per frame
     private double speed;
     private boolean reachedTarget;
+
+    private boolean rotatableProjectile;
 
     /**
      *
      * @param speed The distance per second the projectile moves.
      * @param pathToImage
      */
-    public Projectile(Vector position, double speed, String pathToImage) {
+    public Projectile(Vector position, double speed, boolean rotatableProjectile, String pathToImage) {
         super(position, pathToImage);
         setSpeed(speed);
+        this.rotatableProjectile = rotatableProjectile;
     }
 
     /**
@@ -51,7 +53,9 @@ public abstract class Projectile extends GameObject {
         return this.speed;
     }
 
-
+    protected boolean isRotatableProjectile() {
+        return rotatableProjectile;
+    }
 
     public abstract void move();
 }

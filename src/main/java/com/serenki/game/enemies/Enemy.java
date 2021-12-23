@@ -129,8 +129,9 @@ public abstract class Enemy extends GameObject {
         Vector velocity = this.position.vectorTo(path.peek().getPosition());
         velocity = velocity.normalize();
         velocity = velocity.multiply(speed);
-        this.changeRotation(new Vector(1, 0).angleTo(velocity));
         this.position = position.add(velocity);
+
+        this.sprite.setRotationAngle(velocity);
 
         if (this.position.distanceTo(path.peek().getPosition()) < 0.05) {
             this.path.pop();
@@ -138,7 +139,7 @@ public abstract class Enemy extends GameObject {
     }
 
     private void cheatMove() {
-        System.out.println("cheatMove is used by: " + this + " (at Position (" + this.getPosition().getX() + ", " + this.getPosition().getY() + "))");
+        //System.out.println("cheatMove is used by: " + this + " (at Position (" + this.getPosition().getX() + ", " + this.getPosition().getY() + "))");
         Vector velocity = this.position.vectorTo(destination);
         velocity = velocity.normalize();
         velocity = velocity.multiply(speed);
@@ -172,29 +173,5 @@ public abstract class Enemy extends GameObject {
         return destination;
     }
 
-    /**
-     * @param position The exact position on the board. (Default: From 0.0 to 15.0, both x and y)
-     * @param speed The speed per second the enemy moves.
-     * @param hitBoxRadius The radius of the circular hitbox of the enemy. (Used by missiles)
-     * @param pathToImage
-     * @deprecated Doesn't give HP
-     */
-    @Deprecated
-    public Enemy(Vector position, double speed, double hitBoxRadius, String pathToImage) {
-        super(position, pathToImage);
-        setSpeed(speed);
-        setHitBoxRadius(hitBoxRadius);
-        setDestinationBasedOnStart(position);
-        setHealthPoints(1);
-    }
-
-    /**
-     * @param pathToImage
-     * @deprecated
-     */
-    @Deprecated
-    public Enemy(String pathToImage) {
-        super(pathToImage);
-    }
 
 }

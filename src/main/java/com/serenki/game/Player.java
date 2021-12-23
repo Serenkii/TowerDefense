@@ -24,7 +24,7 @@ public class Player {
     private Canvas canvas;
 
     public Player (@NotNull final Game game) {
-        this.money = 99999;
+        this.money = 100;
         this.healthPoints = 50;
         this.game = game;
         this.towersManager = game.getTowersManager();

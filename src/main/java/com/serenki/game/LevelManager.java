@@ -25,7 +25,7 @@ public class LevelManager {
             return;
         levels.peek().update();
         if (!levels.peek().isRunning()) {
-            levels.poll();
+            this.game.getPlayer().changeMoneyBy(levels.poll().getReward());
         }
     }
 
@@ -46,19 +46,19 @@ public class LevelManager {
 
 
     private void loadLevels() {
-        Level level1 = new Level(game);
+        Level level1 = new Level(game, 10000);
         for (int i = 0; i < 10; i++) {
-            level1.addEnemy(new Zeppelin(new Vector(Math.random() * 15, -0.5), game.getPathfinding()), 1d);
+            level1.addEnemy(new Airplane(new Vector(Math.random() * 15, -0.5), game.getPathfinding()), 1d);
         }
         levels.add(level1);
 
-        Level level2 = new Level(game);
+        Level level2 = new Level(game, 100);
         for (int i = 0; i < 15; i++) {
             level2.addEnemy(new MilitaryTruck(new Vector(-0.5, Math.random() * 15), game.getPathfinding()), 0.5d);
         }
         levels.add(level2);
 
-        Level level3 = new Level(game);
+        Level level3 = new Level(game, 6969);
         for (int i = 0; i < 20; i++) {
             if (Math.random() < 0.5)
                 level3.addEnemy(new Soldier(new Vector(Math.random() * 15, -0.5), game.getPathfinding()), Math.random() * 1d);
@@ -70,7 +70,7 @@ public class LevelManager {
         level3.addEnemy(new Airplane(new Vector(-0.5, 8.5), game.getPathfinding()), 0);
         levels.add(level3);
 
-        Level level4 = new Level(game);
+        Level level4 = new Level(game, 10000000);
         level4.addEnemy(new Zeppelin(new Vector(7.5, -5), game.getPathfinding()), 2d);
         levels.add(level4);
     }
@@ -91,8 +91,11 @@ public class LevelManager {
 
         private int framesSinceLastSpawn;
 
-        public Level(@NotNull final Game game) {
+        private int reward;
+
+        public Level(@NotNull final Game game, int reward) {
             this.game = game;
+            this.reward = reward;
             enemyQueue = new ConcurrentLinkedQueue<>();
             delay = new ConcurrentLinkedQueue<>();
             running = false;
@@ -130,6 +133,10 @@ public class LevelManager {
 
         public boolean isRunning() {
             return running;
+        }
+
+        public int getReward() {
+            return reward;
         }
 
         /**

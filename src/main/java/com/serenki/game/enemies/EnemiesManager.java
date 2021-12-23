@@ -1,8 +1,7 @@
 package com.serenki.game.enemies;
 
-import com.serenki.game.Player;
+import com.serenki.game.Game;
 import com.serenki.game.Vector;
-import javafx.scene.canvas.GraphicsContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -12,16 +11,13 @@ import java.util.Iterator;
 
 public class EnemiesManager {
 
-    private GraphicsContext graphicsContext;
-
-    private final Player player;
+    private Game game;
 
     private ArrayList<Enemy> enemies;
 
-    public EnemiesManager(GraphicsContext graphicsContext, Player player) {
+    public EnemiesManager(Game game) {
         enemies = new ArrayList<>();
-        this.player = player;
-        this.graphicsContext = graphicsContext;
+        this.game = game;
     }
 
     public Enemy getOneEnemyInArea(Vector position, double radius) {
@@ -63,17 +59,17 @@ public class EnemiesManager {
         for (Iterator<Enemy> iterator = enemies.iterator(); iterator.hasNext();) {
             Enemy e = iterator.next();
             if (!e.isAlive()) {
-                this.player.changeMoneyBy(e.getMoneyValue());
+                this.game.getPlayer().changeMoneyBy(e.getMoneyValue());
                 iterator.remove();
             }
             else if (e.reachedDestination()) {
-                this.player.changeHealthPointsBy(-e.getDamageValue());
+                this.game.getPlayer().changeHealthPointsBy(-e.getDamageValue());
                 iterator.remove();
             }
         }
         for (Enemy enemy : enemies) {
             enemy.update();
-            enemy.render(this.graphicsContext);
+            enemy.render(this.game.getGraphicsContext());
         }
     }
 

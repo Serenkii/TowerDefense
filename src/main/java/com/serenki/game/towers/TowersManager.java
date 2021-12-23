@@ -1,10 +1,8 @@
 package com.serenki.game.towers;
 
 import com.serenki.game.Battlefield;
+import com.serenki.game.Game;
 import com.serenki.game.GridCoordinate;
-import com.serenki.game.enemies.EnemiesManager;
-import com.serenki.game.pathfinding.Pathfinding;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import org.jetbrains.annotations.NotNull;
@@ -16,29 +14,18 @@ import java.util.ArrayList;
 
 public class TowersManager {
 
-    private GraphicsContext graphicsContext;
+    private Game game;
 
     private ArrayList<Tower> towers;
     private Tower selectedTower;
 
-    private EnemiesManager enemiesManager;
-
     private MediaPlayer placingSoundPlayer;
 
-    private Pathfinding pathfinding;
 
-    public TowersManager(GraphicsContext graphicsContext) {
+    public TowersManager(@NotNull final Game game) {
         towers = new ArrayList<>();
-        this.graphicsContext = graphicsContext;
+        this.game = game;
         initiatePlacingSoundPlayer();
-    }
-
-    public void setEnemiesManager(EnemiesManager enemiesManager) {
-        this.enemiesManager = enemiesManager;
-    }
-
-    public void setPathfinding(@NotNull Pathfinding pathfinding) {
-        this.pathfinding = pathfinding;
     }
 
     /**
@@ -60,12 +47,12 @@ public class TowersManager {
         initiatePlacingSoundPlayer();       //WHY DO I NEED THIS???
         this.placingSoundPlayer.play();
 
-        pathfinding.getGrid().updateForNewTowers(this);
-        if (enemiesManager == null) {
+        this.game.getPathfinding().getGrid().updateForNewTowers(this);
+        if (this.game.getEnemiesManager() == null) {
             System.err.println("enemiesManager was never initiated in this TowersManager - You need to call the setEnemiesManager()-method!");
             return true;
         }
-        enemiesManager.findNewPaths();
+        this.game.getEnemiesManager().findNewPaths();
 
         return true;
     }
@@ -95,7 +82,7 @@ public class TowersManager {
     public void renderAndUpdate() {
         for (Tower tower : towers) {
             tower.update();
-            tower.render(this.graphicsContext);
+            tower.render(this.game.getGraphicsContext());
             if (tower.isSelected())     //this will maybe be changed when I add selecting towers
                 this.selectedTower = tower;
         }
@@ -130,8 +117,8 @@ public class TowersManager {
     public void renderSelectedTower() {
         if (selectedTower == null)
             return;
-        selectedTower.render(this.graphicsContext);
-        selectedTower.renderRangeIndication(this.graphicsContext);
+        selectedTower.render(this.game.getGraphicsContext());
+        selectedTower.renderRangeIndication(this.game.getGraphicsContext());
     }
 
     public int towerCount() {

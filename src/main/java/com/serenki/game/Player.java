@@ -1,15 +1,16 @@
 package com.serenki.game;
 
-import com.serenki.game.towers.Barrier;
-import com.serenki.game.towers.Tower;
-import com.serenki.game.towers.TowersManager;
+import com.serenki.game.towers.*;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class Player {
+
+    private Game game;
 
     private int money;
     private int healthPoints;
@@ -22,11 +23,12 @@ public class Player {
 
     private Canvas canvas;
 
-    public Player (Canvas canvas, TowersManager towersManager) {
+    public Player (@NotNull final Game game) {
         this.money = 99999;
         this.healthPoints = 50;
-        this.towersManager = towersManager;
-        this.canvas = canvas;
+        this.game = game;
+        this.towersManager = game.getTowersManager();
+        this.canvas = game.getCanvas();
 
         this.canvas.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -37,6 +39,12 @@ public class Player {
                         towersManager.unselectAll();
                     }
                     case DIGIT1 -> towerToPlace = new Barrier();
+                    case DIGIT2 -> towerToPlace = new QuadrupleShooter(game.getEnemiesManager(), game.getProjectilesManager());
+                    case DIGIT3 -> towerToPlace = new Flamethrower(game.getEnemiesManager(), game.getProjectilesManager());
+                    case DIGIT4 -> towerToPlace = new Sniper(game.getEnemiesManager(), game.getProjectilesManager());
+                    case DIGIT5 -> towerToPlace = new Cannon(game.getEnemiesManager(), game.getProjectilesManager());
+
+                    case F1 ->  game.getLevelManager().startNextLevel();
                 }
             }
         });

@@ -2,11 +2,11 @@ package com.serenki.game;
 
 import com.serenki.game.UI.GameWindowController;
 import com.serenki.game.enemies.EnemiesManager;
-import com.serenki.game.enemies.Soldier;
 import com.serenki.game.pathfinding.Grid;
 import com.serenki.game.pathfinding.Pathfinding;
 import com.serenki.game.projectiles.ProjectilesManager;
 import com.serenki.game.towers.TowersManager;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 
@@ -28,6 +28,9 @@ public class Game {
 
     private Pathfinding pathfinding;
 
+    private LevelManager levelManager;
+
+
     public Game(GameWindowController gameWindowController) {
         this.gameWindowController = gameWindowController;
 
@@ -35,27 +38,28 @@ public class Game {
 
         this.battlefield = new Battlefield();
 
-        towersManager = new TowersManager(this.graphicsContext);
-        projectilesManager = new ProjectilesManager(this.graphicsContext);
-        player = new Player(this.graphicsContext.getCanvas(), this.towersManager);
-        enemiesManager = new EnemiesManager(this.graphicsContext, this.player);
+        towersManager = new TowersManager(this);
+        projectilesManager = new ProjectilesManager(this);
+        enemiesManager = new EnemiesManager(this);
 
-        towersManager.setEnemiesManager(enemiesManager);
+        player = new Player(this);
 
-        gameWindowController.initializeManually(this.player, enemiesManager, projectilesManager);
+        gameWindowController.initializeManually(this);
 
         Grid grid = new Grid(towersManager);
         this.pathfinding = new Pathfinding(grid);
 
-        towersManager.setPathfinding(pathfinding);
+        this.levelManager = new LevelManager(this);
+
 
         //test --- at least the enemy is moving I guess
-        for (int i = -20; i > -100; i--) {
+        /*for (int i = -20; i > -100; i--) {
             enemiesManager.add(new Soldier(new Vector(i, Math.random() * 15), pathfinding));
-        }
+        }*/
     }
 
     public void update() {
+        levelManager.update();
         battlefield.render(this.graphicsContext);
         towersManager.renderAndUpdate();
         enemiesManager.renderAndUpdate();
@@ -63,5 +67,46 @@ public class Game {
         towersManager.renderSelectedTower();
         player.renderTower();
         gameWindowController.updateDisplays();
+    }
+
+
+    public GraphicsContext getGraphicsContext() {
+        return graphicsContext;
+    }
+
+    public TowersManager getTowersManager() {
+        return towersManager;
+    }
+
+    public EnemiesManager getEnemiesManager() {
+        return enemiesManager;
+    }
+
+    public ProjectilesManager getProjectilesManager() {
+        return projectilesManager;
+    }
+
+    public Battlefield getBattlefield() {
+        return battlefield;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public GameWindowController getGameWindowController() {
+        return gameWindowController;
+    }
+
+    public Pathfinding getPathfinding() {
+        return pathfinding;
+    }
+
+    public Canvas getCanvas() {
+        return this.graphicsContext.getCanvas();
+    }
+
+    public LevelManager getLevelManager() {
+        return levelManager;
     }
 }

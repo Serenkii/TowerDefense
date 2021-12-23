@@ -1,22 +1,17 @@
 package com.serenki.game.UI;
 
-import com.serenki.game.Player;
-import com.serenki.game.enemies.EnemiesManager;
-import com.serenki.game.projectiles.ProjectilesManager;
-import com.serenki.game.towers.Barrier;
-import com.serenki.game.towers.FireCannon;
-import com.serenki.game.towers.QuadrupleShooter;
+import com.serenki.game.Game;
+import com.serenki.game.towers.*;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class GameWindowController {
 
-    private Player player;
-    private EnemiesManager enemiesManager;
-    private ProjectilesManager projectilesManager;
+    private Game game;
 
 
     @FXML
@@ -29,33 +24,38 @@ public class GameWindowController {
     private Label moneyDisplay;
 
     public void updateDisplays() {
-        moneyDisplay.setText(this.player.getMoney() + "$");
-        healthDisplay.setText(this.player.getHealthPoints() + "♥");
+        moneyDisplay.setText(this.game.getPlayer().getMoney() + "$");
+        healthDisplay.setText(this.game.getPlayer().getHealthPoints() + "♥");
     }
 
     public GraphicsContext getGraphicsContextOfCanvas() {
         return battlefieldCanvas.getGraphicsContext2D();
     }
 
-    public void initializeManually(Player player, EnemiesManager enemiesManager, ProjectilesManager projectilesManager) {
-        this.player = player;
-        this.enemiesManager = enemiesManager;
-        this.projectilesManager = projectilesManager;
+    public void initializeManually(@NotNull final Game game) {
+        this.game = game;
     }
 
     @FXML
     void pickUpBarrier(MouseEvent event) {
-        player.setTowerToPlace(new Barrier());
+        game.getPlayer().setTowerToPlace(new Barrier());
     }
 
     @FXML
     void pickUpCannon(MouseEvent event) {
-        player.setTowerToPlace(new FireCannon(this.enemiesManager, this.projectilesManager));
+        game.getPlayer().setTowerToPlace(new Cannon(this.game.getEnemiesManager(), this.game.getProjectilesManager()));
     }
 
     @FXML
     void pickUpQuadrupleShooter(MouseEvent event) {
-        player.setTowerToPlace(new QuadrupleShooter(this.enemiesManager, this.projectilesManager));
+        game.getPlayer().setTowerToPlace(new QuadrupleShooter(this.game.getEnemiesManager(), this.game.getProjectilesManager()));
     }
 
+    public void pickUpFlameThrower(MouseEvent mouseEvent) {
+        game.getPlayer().setTowerToPlace(new Flamethrower(this.game.getEnemiesManager(), this.game.getProjectilesManager()));
+    }
+
+    public void pickUpSniper(MouseEvent mouseEvent) {
+        game.getPlayer().setTowerToPlace(new Sniper(this.game.getEnemiesManager(), this.game.getProjectilesManager()));
+    }
 }

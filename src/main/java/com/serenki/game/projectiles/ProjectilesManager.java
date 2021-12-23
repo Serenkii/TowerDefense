@@ -1,6 +1,6 @@
 package com.serenki.game.projectiles;
 
-import javafx.scene.canvas.GraphicsContext;
+import com.serenki.game.Game;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -9,13 +9,13 @@ import java.util.ArrayList;
 
 public class ProjectilesManager {
 
-    private GraphicsContext graphicsContext;
+    private Game game;
 
     private ArrayList<Projectile> projectiles;
 
-    public ProjectilesManager(GraphicsContext graphicsContext) {
+    public ProjectilesManager(@NotNull final Game game) {
         projectiles = new ArrayList<>();
-        this.graphicsContext = graphicsContext;
+        this.game = game;
     }
 
     public void add(@NotNull Projectile projectile) {
@@ -33,7 +33,7 @@ public class ProjectilesManager {
         projectiles.removeIf(projectile -> projectile.hasReachedTarget());
         for (Projectile projectile : projectiles) {
             projectile.update();
-            projectile.render(this.graphicsContext);
+            projectile.render(this.game.getGraphicsContext());
         }
     }
 

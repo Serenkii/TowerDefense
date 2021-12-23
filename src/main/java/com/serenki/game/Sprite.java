@@ -40,6 +40,11 @@ public class Sprite {
         return image;
     }
 
+    public void changeImageRotationTo() {
+
+
+    }
+
     public double getWidth() {
         return image.getWidth();
     }

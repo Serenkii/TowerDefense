@@ -129,6 +129,7 @@ public abstract class Enemy extends GameObject {
         Vector velocity = this.position.vectorTo(path.peek().getPosition());
         velocity = velocity.normalize();
         velocity = velocity.multiply(speed);
+        this.changeRotation(new Vector(1, 0).angleTo(velocity));
         this.position = position.add(velocity);
 
         if (this.position.distanceTo(path.peek().getPosition()) < 0.05) {
@@ -137,6 +138,7 @@ public abstract class Enemy extends GameObject {
     }
 
     private void cheatMove() {
+        System.out.println("cheatMove is used by: " + this + " (at Position (" + this.getPosition().getX() + ", " + this.getPosition().getY() + "))");
         Vector velocity = this.position.vectorTo(destination);
         velocity = velocity.normalize();
         velocity = velocity.multiply(speed);
@@ -160,6 +162,14 @@ public abstract class Enemy extends GameObject {
 
     public int getDamageValue() {
         return damageValue;
+    }
+
+    protected double getSpeed() {
+        return speed;
+    }
+
+    protected Vector getDestination() {
+        return destination;
     }
 
     /**

@@ -1,7 +1,6 @@
 package com.serenki.game;
 
-import com.serenki.game.enemies.Enemy;
-import com.serenki.game.enemies.Soldier;
+import com.serenki.game.enemies.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Queue;
@@ -49,13 +48,13 @@ public class LevelManager {
     private void loadLevels() {
         Level level1 = new Level(game);
         for (int i = 0; i < 10; i++) {
-            level1.addEnemy(new Soldier(new Vector(Math.random() * 15, -0.5), game.getPathfinding()), 1d);
+            level1.addEnemy(new Zeppelin(new Vector(Math.random() * 15, -0.5), game.getPathfinding()), 1d);
         }
         levels.add(level1);
 
         Level level2 = new Level(game);
         for (int i = 0; i < 15; i++) {
-            level2.addEnemy(new Soldier(new Vector(-0.5, Math.random() * 15), game.getPathfinding()), 0.5d);
+            level2.addEnemy(new MilitaryTruck(new Vector(-0.5, Math.random() * 15), game.getPathfinding()), 0.5d);
         }
         levels.add(level2);
 
@@ -66,7 +65,14 @@ public class LevelManager {
             else
                 level3.addEnemy(new Soldier(new Vector(-0.5, Math.random() * 15), game.getPathfinding()), Math.random() * 1d);
         }
+        level3.addEnemy(new Airplane(new Vector(-0.5, 7.5), game.getPathfinding()), 10.5d);
+        level3.addEnemy(new Airplane(new Vector(-0.5, 6.5), game.getPathfinding()), 0.5d);
+        level3.addEnemy(new Airplane(new Vector(-0.5, 8.5), game.getPathfinding()), 0);
         levels.add(level3);
+
+        Level level4 = new Level(game);
+        level4.addEnemy(new Zeppelin(new Vector(7.5, -5), game.getPathfinding()), 2d);
+        levels.add(level4);
     }
 
 
@@ -130,6 +136,7 @@ public class LevelManager {
          * Summons the first enemy in the queue
          */
         private void summonEnemy() {
+            enemyQueue.peek().findPath();       //Before being spawned, the entity should now an up to date path
             game.getEnemiesManager().add(enemyQueue.poll());
             delay.poll();
             framesSinceLastSpawn = 0;

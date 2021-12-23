@@ -6,6 +6,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -32,6 +33,7 @@ public class ApplicationMain extends Application {
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        stage.getIcons().add(new Image("file:src/main/resources/com/serenki/art/towers/QuadrupleShooter.png"));
         stage.show();
 
         AnimationTimer gameloop = new AnimationTimer() {
@@ -41,7 +43,6 @@ public class ApplicationMain extends Application {
             }
         };
         gameloop.start();
-
     }
 
     public static void main(String[] args) {

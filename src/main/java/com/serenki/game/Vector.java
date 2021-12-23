@@ -131,6 +131,10 @@ public class Vector {
     }
 
 
+    public double angleTo(@NotNull final Vector vector) {       //https://www.euclideanspace.com/maths/algebra/vectors/angleBetween/
+        return Math.acos(this.normalize().dotProduct(vector.normalize()));
+    }
+
 
     @Override
     public boolean equals(Object o) {

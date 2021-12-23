@@ -67,7 +67,7 @@ public class Pathfinding {
         Stack<Node> path = new Stack<Node>();
         Node currentNode = endNode;
 
-        while (currentNode != startNode) {          //!= instead of !equals() should work because they should be at the same position in memory
+        while (currentNode != startNode) {          //!= instead of !equals() works because reference is compared
             path.add(currentNode);
             currentNode = currentNode.getParent();
         }

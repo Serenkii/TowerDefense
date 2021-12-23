@@ -5,6 +5,6 @@ import com.serenki.game.pathfinding.Pathfinding;
 
 public class Soldier extends Enemy {
     public Soldier(Vector position, Pathfinding pathfinding) {
-        super(position, pathfinding, 1.5, 0.2, 30, 10,1, "file:src/main/resources/com/serenki/art/enemies/DefaultEnemy.png");
+        super(position, pathfinding, 1, 0.1, 30, 10,1, "file:src/main/resources/com/serenki/art/enemies/Soldiers.png");
     }
 }

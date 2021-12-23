@@ -8,12 +8,16 @@ public class Sprite {
     //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/image/Image.html
     private Image image;
 
+    private double rotation;
+
     public Sprite(String pathToImage) {
         this.image = new Image(pathToImage);
+        this.rotation = 0;
     }
 
     public Sprite(String pathToImage, double width, double height) {
         this.image = new Image(pathToImage, height, width, false, false);
+        this.rotation = 0;
     }
 
     /**
@@ -40,9 +44,8 @@ public class Sprite {
         return image;
     }
 
-    public void changeImageRotationTo() {
-
-
+    public void changeImageRotationTo(double rotationInDegrees) {
+        this.rotation = Math.toRadians(rotationInDegrees);
     }
 
     public double getWidth() {

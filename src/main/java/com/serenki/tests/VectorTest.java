@@ -102,4 +102,11 @@ class VectorTest {
         Assertions.assertEquals(new Vector(1, 0), new Vector(0, -1).orthogonal());
         Assertions.assertEquals(new Vector(3, 4), new Vector(4, -3).orthogonal());
     }
+
+    @Test
+    void angleTo() {
+        Assertions.assertEquals(90, Math.toDegrees(new Vector(1, 0).angleTo(new Vector(0, 1))));
+        //Assertions.assertEquals(45, Math.toDegrees(new Vector(1, 0).angleTo(new Vector(1, 1))));
+        //Assertions.assertEquals(45, Math.toDegrees(new Vector(1, 0).angleTo(new Vector(1, -1))));
+    }
 }

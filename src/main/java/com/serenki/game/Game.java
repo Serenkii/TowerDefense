@@ -6,11 +6,12 @@ import com.serenki.game.pathfinding.Grid;
 import com.serenki.game.pathfinding.Pathfinding;
 import com.serenki.game.projectiles.ProjectilesManager;
 import com.serenki.game.towers.TowersManager;
+import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 
-public class Game {
+public class Game {     //TODO Refactor at some point so Game just extends AnimationTimer
 
     public static final int FRAME_RATE = 60;
 
@@ -30,9 +31,12 @@ public class Game {
 
     private LevelManager levelManager;
 
+    private AnimationTimer gameloop;
 
-    public Game(GameWindowController gameWindowController) {
+
+    public Game(GameWindowController gameWindowController, AnimationTimer gameloop) {
         this.gameWindowController = gameWindowController;
+        this.gameloop = gameloop;
 
         this.graphicsContext = this.gameWindowController.getGraphicsContextOfCanvas();
 
@@ -50,12 +54,6 @@ public class Game {
         this.pathfinding = new Pathfinding(grid);
 
         this.levelManager = new LevelManager(this);
-
-
-        //test --- at least the enemy is moving I guess
-        /*for (int i = -20; i > -100; i--) {
-            enemiesManager.add(new Soldier(new Vector(i, Math.random() * 15), pathfinding));
-        }*/
     }
 
     public void update() {
@@ -69,6 +67,14 @@ public class Game {
         gameWindowController.updateDisplays();
     }
 
+
+    public void loose() {
+        gameloop.stop();
+    }
+
+    public AnimationTimer getGameloop() {
+        return gameloop;
+    }
 
     public GraphicsContext getGraphicsContext() {
         return graphicsContext;

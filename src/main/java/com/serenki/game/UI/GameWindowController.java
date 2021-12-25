@@ -7,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
 public class GameWindowController {
@@ -33,11 +34,21 @@ public class GameWindowController {
     public void updateDisplays() {
         moneyDisplay.setText(this.game.getPlayer().getMoney() + "$");
         healthDisplay.setText(this.game.getPlayer().getHealthPoints() + "♥");
-        levelDisplay.setText("Level " + this.game.getLevelManager().getLevel());
+
+        if (this.game.getLevelManager().getLevel() == this.game.getLevelManager().getNumberTotalLevels())
+            levelDisplay.setText("endless Mode");
+        else
+            levelDisplay.setText("Level " + this.game.getLevelManager().getLevel());
+
         if (game.getLevelManager().nextLevelAvailable())
-            nextLevelButton.setText("nächstes Level");
+            nextLevelButton.setText("next Level");
         else
             nextLevelButton.setText("");
+
+        if(this.game.getPlayer().getHealthPoints() <= 0)
+            healthDisplay.setTextFill(Color.RED);
+        else
+            healthDisplay.setTextFill(Color.BLACK);
     }
 
     public GraphicsContext getGraphicsContextOfCanvas() {

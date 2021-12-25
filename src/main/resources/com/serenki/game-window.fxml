@@ -67,7 +67,7 @@
                         </ImageView>
                         <Label onMouseClicked="#pickUpQuadrupleShooter" prefHeight="270.0" prefWidth="270.0" GridPane.columnIndex="1">
                            <tooltip>
-                              <Tooltip text="The legendary Quadruple-Shooter. Four-times the power.&#10;&#10;Cost: ?$ ">
+                              <Tooltip text="The legendary Quadruple-Shooter. Four-times the power.&#10;&#10;Cost: 200$ ">
                                  <font>
                                     <Font name="Arial" size="30.0" />
                                  </font>
@@ -81,7 +81,7 @@
                         </ImageView>
                         <Label onMouseClicked="#pickUpFlameThrower" prefHeight="270.0" prefWidth="270.0" GridPane.rowIndex="1">
                            <tooltip>
-                              <Tooltip text="Careful near this one. It can get quite hot...&#10;&#10;Cost: ?$ ">
+                              <Tooltip text="Careful near this one. It can get quite hot...&#10;&#10;Cost: 300$ ">
                                  <font>
                                     <Font name="Arial" size="30.0" />
                                  </font>
@@ -95,7 +95,7 @@
                         </ImageView>
                         <Label onMouseClicked="#pickUpSniper" prefHeight="270.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <tooltip>
-                              <Tooltip text="&quot;Boom! Headshot&quot;&#10;&#10;Cost: ?$ ">
+                              <Tooltip text="&quot;Boom! Headshot&quot;&#10;&#10;Cost: 500$ ">
                                  <font>
                                     <Font name="Arial" size="30.0" />
                                  </font>
@@ -109,7 +109,7 @@
                         </ImageView>
                         <Label onMouseClicked="#pickUpCannon" prefHeight="270.0" prefWidth="270.0" GridPane.rowIndex="2">
                            <tooltip>
-                              <Tooltip text="A funky space cannon some aliens left. &#10;Don't look in its barrel.&#10;&#10;Cost: ?$ ">
+                              <Tooltip text="A funky space cannon some aliens left. &#10;Don't look in its barrel.&#10;&#10;Cost: 500$ ">
                                  <font>
                                     <Font name="Arial" size="30.0" />
                                  </font>

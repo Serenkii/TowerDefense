@@ -59,6 +59,7 @@ public class TowersManager {
 
     private void initiatePlacingSoundPlayer() {
         Media sound = new Media(new File("src/main/resources/com/serenki/art/towers/placing.wav").toURI().toString());
+        System.out.println(new File("src/main/resources/com/serenki/art/towers/placing.wav").toURI().toString());
         this.placingSoundPlayer = new MediaPlayer(sound);
     }
 

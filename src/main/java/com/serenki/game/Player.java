@@ -27,7 +27,7 @@ public class Player {
     private boolean usedCheat;
 
     public Player (@NotNull final Game game) {
-        this.money = 100000;
+        this.money = 500;
         this.healthPoints = 50;
         this.game = game;
         this.towersManager = game.getTowersManager();
@@ -113,6 +113,11 @@ public class Player {
 
     public void changeHealthPointsBy(int value) {
         this.healthPoints += value;
+
+        if (healthPoints <= 0) {
+            this.healthPoints = 0;
+            this.game.loose();
+        }
     }
 
     public void setTowerToPlace(Tower towerToPlace) {
@@ -145,6 +150,9 @@ public class Player {
         }
         if (cheatCode.equals("MARIAN")) {
             this.money = Integer.MAX_VALUE - 10000;
+            if (healthPoints <= 0)
+                game.getGameloop().start();
+            this.healthPoints = Integer.MAX_VALUE;
             usedCheat = true;
         }
     }

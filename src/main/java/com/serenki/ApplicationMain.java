@@ -27,8 +27,6 @@ public class ApplicationMain extends Application {
 
         GameWindowController gameWindowController = fxmlLoader.getController();
 
-        game = new Game(gameWindowController);
-
         stage.setTitle("Serenki's Tower Defense Game");
         stage.setScene(scene);
         stage.setFullScreen(true);
@@ -42,7 +40,11 @@ public class ApplicationMain extends Application {
                 game.update();
             }
         };
+
+        game = new Game(gameWindowController, gameloop);            //TODO Refactor at some point so Game just extends AnimationTimer
+
         gameloop.start();
+
     }
 
     public static void main(String[] args) {

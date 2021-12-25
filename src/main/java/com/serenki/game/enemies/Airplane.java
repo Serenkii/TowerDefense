@@ -8,7 +8,7 @@ public class Airplane extends Enemy {
     private Vector velocity;
 
     public Airplane(Vector position, Pathfinding pathfinding) {
-        super(position, pathfinding, 2, 0.2, 50, 20,1, "file:src/main/resources/com/serenki/art/enemies/Airplane.png");
+        super(position, pathfinding, 2, 0.2, 70, 20,1, "file:src/main/resources/com/serenki/art/enemies/Airplane.png");
 
         calculateVelocity();
     }

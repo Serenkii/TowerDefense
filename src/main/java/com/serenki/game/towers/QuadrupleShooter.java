@@ -14,7 +14,7 @@ public class QuadrupleShooter extends Tower {
     }
 
     public QuadrupleShooter(EnemiesManager enemiesManager, ProjectilesManager projectilesManager) {
-        super(250,0.8d, 3, enemiesManager, projectilesManager, "file:src/main/resources/com/serenki/art/towers/QuadrupleShooter.png");
+        super(200,0.8d, 3, enemiesManager, projectilesManager, "file:src/main/resources/com/serenki/art/towers/QuadrupleShooter.png");
     }
 
     @Override

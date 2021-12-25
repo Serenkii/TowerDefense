@@ -16,7 +16,7 @@ public class Battlefield {
 
 
     public Battlefield() {
-        background = new Sprite("file:src/main/resources/com/serenki/art/background/PrototypeGrid.jpg", Battlefield.PIXEL_SIZE, Battlefield.PIXEL_SIZE);
+        background = new Sprite("file:src/main/resources/com/serenki/art/background/Battlefield2.png", Battlefield.PIXEL_SIZE, Battlefield.PIXEL_SIZE);
     }
 
     public void render(final GraphicsContext context) {

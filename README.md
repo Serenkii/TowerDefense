@@ -3,7 +3,7 @@ I already did some stuff with Unity, but I thought it'd be interesting to try to
 I also decided to make Towers placable anywhere on a grid, so you can build up paths for the enemies yourself.
 
 ## Java-Version
-I used the latest Java-Version, namely Java 17. The project can easily be downscaled to Java 11 as I only used the new Switch-Cases from Java 17. I don't think you can go below Java 11, as JavaFX 17 requires Java 11 as a minimum. ([Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html))
+I used the latest Java-Version, namely Java 17. The project can easily be downscaled to Java 11 as I only used the new Switch-Cases from Java 17. I don't think you can go below Java 11, as JavaFX 17 ([see JavaFX](https://github.com/Serenkii/TowerDefense#javafx)) requires Java 11 as a minimum. ([Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html))
 
 ## Graphics
 JavaFX is used for the graphical presantation of the game. I had not heard of GLFW or OpenGL for Java at that point.

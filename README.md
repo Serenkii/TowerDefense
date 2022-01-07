@@ -21,7 +21,7 @@ I took the design of the Zeppelin from [this tutorial](http://www.blackgolem.com
 
 ![Zeppelin](https://github.com/Serenkii/TowerDefense/blob/main/src/main/resources/com/serenki/art/enemies/Zeppelin.png)
 
-All other designs were self-made with [paint.net](https://www.getpaint.net/), although often inspired from pixel art from the internet.
+All other designs were self-made with [paint.net](https://www.getpaint.net/), although often inspired from (pixel) art from the internet.
 
 ## Other
 At the moment I've had enough of this project. [2022/01/07]

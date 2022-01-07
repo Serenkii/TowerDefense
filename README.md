@@ -23,4 +23,4 @@ I took the design of one enemy from [this tutorial](http://www.blackgolem.com/bl
 
 # Other
 At the moment I've had enough of this project. [2022/01/07]
-Many features could be added and improved, but I am happy with what I've accomplished. (For example how Levels are set up can be majorely improved, but I had a deadline till Christmas because I also used this as a present)
+Many features could be added and improved, but I am happy with what I've accomplished. _(For example how Levels are set up can be majorely improved, but I had a deadline till Christmas because I also used this as a present)_

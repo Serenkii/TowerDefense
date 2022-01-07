@@ -13,6 +13,9 @@ public class Airplane extends Enemy {
         calculateVelocity();
     }
 
+    /**
+     * Calculates the velocity of the airplane based on the destination.
+     */
     private void calculateVelocity() {
         this.velocity = this.position.vectorTo(super.getDestination());
         this.velocity = this.velocity.normalize();

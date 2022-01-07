@@ -63,7 +63,7 @@ public class Pathfinding {
         return null;
     }
 
-    public Stack<Node> retracePath(Node startNode, Node endNode) {
+    private Stack<Node> retracePath(Node startNode, Node endNode) {
         Stack<Node> path = new Stack<Node>();
         Node currentNode = endNode;
 
@@ -75,7 +75,13 @@ public class Pathfinding {
         return path;
     }
 
-    public int getDistance(Node node1, Node node2) {
+    /**
+     * Calculates the distance between two nodes, not being able to go in diagonal lines.
+     * @param node1 The first node.
+     * @param node2 The second node.
+     * @return The distance between these two nodes, rounded to an integer.
+     */
+    private int getDistance(Node node1, Node node2) {
         return Math.abs(node1.getGridX() - node2.getGridX()) + Math.abs(node1.getGridY() - node2.getGridY());
         //More complex version for diagonal moves https://youtu.be/mZfyt03LDH4?t=960
     }

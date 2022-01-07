@@ -43,6 +43,9 @@ public class Grid {
         updateForNewTowers(towersManager);
     }
 
+    /**
+     * Initializes the whole grid, starting with the edge.
+     */
     private void initializeGrid() {
         initializeGridEdge();
         initializeInnerGrid();
@@ -102,8 +105,8 @@ public class Grid {
     }
 
     /**
-     *
-     * @param position
+     * Determines the node closest to the position.
+     * @param position on the Battlefield.
      * @return The node of this position is in. If the position is not in the node, it returns the closest node.
      */
     public Node getNodeFromPosition(@NotNull final Vector position) {

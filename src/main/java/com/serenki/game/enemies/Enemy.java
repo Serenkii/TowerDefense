@@ -42,6 +42,9 @@ public abstract class Enemy extends GameObject {
         findPath();
     }
 
+    /**
+     * Forces the enemy to find a path to its destination.
+     */
     public void findPath() {
         this.path = pathfinding.findPath(this.position, this.destination);
     }
@@ -71,10 +74,18 @@ public abstract class Enemy extends GameObject {
         return false;
     }
 
+    /**
+     * @implNote The enemy is alive as long as this is true: HP > 0
+     * @return True if the enemy is still alive.
+     */
     public boolean isAlive() {
         return healthPoints > 0;
     }
 
+    /**
+     * @implSpec Is used as an easy way to come up with a destination based on the starting position of the enemy.
+     * @param position The starting position of the enemy.
+     */ //You could use a Constructor with a destination parameter instead...
     private void setDestinationBasedOnStart(Vector position) {
         if (position.getX() < 0) {
             destination = new Vector(15.5, position.getY());
@@ -112,12 +123,19 @@ public abstract class Enemy extends GameObject {
         return this.hitBoxRadius;
     }
 
+    /**
+     * @implSpec Call once per frame.
+     */
     @Override
     public void update() {
         move();
     }
 
-    public void move() {
+    /**
+     * Moves the enemy based on its path found via Pathfinding, its speed, its destination and position. The sprite of the enemy is rotated according to the direction it's moving in.
+     * @implSpec Should be called every update.
+     */
+    protected void move() {
         if (this.path == null) {        //If the path is null because none was found, just cheat you way above everything^^
             cheatMove();
             return;
@@ -138,6 +156,10 @@ public abstract class Enemy extends GameObject {
         }
     }
 
+    /**
+     * The enemy ignores all barriers and moves directly in the direction of the destination.
+     * @implSpec Should be used if no path was found.
+     */
     private void cheatMove() {
         //System.out.println("cheatMove is used by: " + this + " (at Position (" + this.getPosition().getX() + ", " + this.getPosition().getY() + "))");
         Vector velocity = this.position.vectorTo(destination);
@@ -150,6 +172,10 @@ public abstract class Enemy extends GameObject {
         }
     }
 
+    /**
+     * @implNote The destination is reached as soon as the distance to it is minimal.
+     * @return True if the destination was reached, otherwise false.
+     */
     public boolean reachedDestination() {
         if (this.position.distanceTo(destination) <= 0.2)
             return true;

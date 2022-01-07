@@ -25,4 +25,4 @@ All other designs were self-made with [paint.net](https://www.getpaint.net/), al
 
 ## Other
 At the moment I've had enough of this project. [2022/01/07]
-Many features could be added and improved, but I am happy with what I've accomplished. _(For example how Levels are set up can be majorely improved, but I had a deadline till Christmas because I also used this as a present)_
+Many features could be added and improved, but I am happy with what I've accomplished. _(For example how Levels are set up can be majorely improved, but I didn't have a lot of time to make it nice, as I had a deadline till Christmas because I also used this as a present)_

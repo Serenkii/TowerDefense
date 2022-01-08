@@ -13,7 +13,9 @@ public abstract class Projectile extends GameObject {
 
     /**
      *
+     * @param position Spawn-Position of the Projectile.
      * @param speed The distance per second the projectile moves.
+     * @param rotatableProjectile True if the Projectile should be able to rotate according to the direction of the velocity-vector.
      * @param pathToImage
      */
     public Projectile(Vector position, double speed, boolean rotatableProjectile, String pathToImage) {
@@ -57,7 +59,7 @@ public abstract class Projectile extends GameObject {
         return rotatableProjectile;
     }
 
-    public abstract void move();
+    protected abstract void move();
 }
 
 /**

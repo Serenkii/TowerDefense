@@ -80,6 +80,10 @@ public class Player {
         this.towerToPlace = null;
     }
 
+    /**
+     * Tries to place a tower at mouse-position and does so if possible.
+     * @param mouseEvent MouseEvent
+     */
     private void tryPlacingTower(MouseEvent mouseEvent) {
         if (money < towerToPlace.getCost()) {
             return;
@@ -90,7 +94,10 @@ public class Player {
         towerToPlace = null;
     }
 
-
+    /**
+     * Tries to select an already placed tower at mouse-position and does so if possible.
+     * @param mouseEvent
+     */
     private void trySelectingTower(MouseEvent mouseEvent) {
         towersManager.selectTower(Battlefield.getCoordinateFromPixPos(new GridCoordinate((int) mouseEvent.getX(), (int) mouseEvent.getY())));
     }
@@ -120,12 +127,20 @@ public class Player {
         }
     }
 
+    /**
+     * A setter-method for the tower the player wants to place.
+     * @param towerToPlace The tower.
+     */
     public void setTowerToPlace(Tower towerToPlace) {
         this.towerToPlace = towerToPlace;
         this.towerToPlace.select();
         this.towersManager.unselectAll();
     }
 
+    /**
+     * Renders the tower the player wants to place.
+     * @implSpec Should be called once per frame.
+     */
     public void renderTower() {
         if (towerToPlace == null) {
             return;

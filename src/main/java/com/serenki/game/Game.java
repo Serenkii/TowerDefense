@@ -12,6 +12,8 @@ import javafx.scene.canvas.GraphicsContext;
 
 
 public class Game {     //TODO Refactor at some point so Game just extends AnimationTimer
+                        //TODO Make Game, ProjectilesManager, Battlefield, etc to classes that can only be created once by making the
+                        //TODO      constructor private and the class static returning our Game with a public Game.get() function.
 
     public static final int FRAME_RATE = 60;
 

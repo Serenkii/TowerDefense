@@ -11,6 +11,10 @@ public class Sniper extends Tower{
         super(500, 5.0, 9, enemiesManager, projectilesManager, "file:src/main/resources/com/serenki/art/towers/Sniper.png");
     }
 
+    /**
+     * Creates projectile that follows target.
+     * @implNote Should be called in update().
+     */
     @Override
     public void shoot() {
         updateCooldown();

@@ -1,6 +1,7 @@
 package com.serenki.game;
 
 import javafx.scene.canvas.GraphicsContext;
+import org.jetbrains.annotations.ApiStatus;
 
 
 public class Battlefield {
@@ -19,6 +20,10 @@ public class Battlefield {
         background = new Sprite("file:src/main/resources/com/serenki/art/background/Battlefield2.png", Battlefield.PIXEL_SIZE, Battlefield.PIXEL_SIZE);
     }
 
+    /**
+     * Renders the Battlefield-image on the canvas.
+     * @param context GraphicsContext of the canvas.
+     */
     public void render(final GraphicsContext context) {
         background.render(PIXEL_POS, context);
     }
@@ -32,8 +37,13 @@ public class Battlefield {
         return null; //TODO
     }
 
+    /**
+     * Calculates the game-coordinate based on a monitor-pixel.
+     * @param pixPos The coordinate of the pixel. (0-1080)
+     * @return The GridCoordinate of the game. (0-15)
+     */
     public static GridCoordinate getCoordinateFromPixPos(GridCoordinate pixPos) {
-        return new GridCoordinate((int) pixPos.getX() / SQUARE_SIZE, (int) pixPos.getY() / SQUARE_SIZE);
+        return new GridCoordinate( pixPos.getX() / SQUARE_SIZE,  pixPos.getY() / SQUARE_SIZE);
     }
 
     /**
@@ -44,7 +54,7 @@ public class Battlefield {
      * @param gridSize
      * @param pathToImage
      */
-    @Deprecated
+    @ApiStatus.Experimental
     public Battlefield(int size, GridCoordinate pixelPos, int gridSize, final String pathToImage) {
         /*this.size = size;
         this.gridSize = gridSize;

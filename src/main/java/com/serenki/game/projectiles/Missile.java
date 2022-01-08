@@ -14,8 +14,8 @@ public class Missile extends Projectile {
     Vector velocity;
 
     /**
-     * @param targetPos
-     * @param speed       The distance per second the projectile moves.
+     * @param targetPos Position of the destination/target.
+     * @param speed The distance per second the projectile moves.
      * @param pathToImage
      */
     public Missile(@NotNull Vector position, @NotNull Vector targetPos, double speed, boolean rotatableProjectile, @NotNull String pathToImage) {
@@ -26,18 +26,29 @@ public class Missile extends Projectile {
             this.sprite.setRotationAngle(velocity);
     }
 
+    /**
+     * Calculates the velocity of the airplane based on the target's position.
+     * @implNote Only needs to be called once when created.
+     */
     private void calculateVelocity() {
         this.velocity = this.position.vectorTo(targetPosition).normalize().multiply(super.getSpeed());
     }
 
+    /**
+     * @implSpec Should be called once per frame by the super.update() function, so the GuidedMissile's position is updated.
+     */
     @Override
-    public void move() {
+    protected void move() {
         if(atTarget()) {
             this.velocity = new Vector(0,0);
         }
         this.position = this.position.add(velocity);
     }
 
+    /**
+     * @implNote The destination is reached as soon as the distance to it is minimal.
+     * @return True if the destination was reached, otherwise false.
+     */
     private boolean atTarget() {
         if (this.position.distanceToSquared(targetPosition) < 0.01)
             return true;

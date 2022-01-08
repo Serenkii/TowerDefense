@@ -7,6 +7,9 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+//Prototype (and complete mess)
+
+
 public class LevelManager {
 
     private Game game;
@@ -54,6 +57,145 @@ public class LevelManager {
         return totalNumberOfLevels;
     }
 
+
+
+    private class Level {
+
+        protected final Game game;
+
+        protected boolean running;
+
+        protected Queue<Enemy> enemyQueue;
+        protected Queue<Integer> delay;
+
+        protected int framesSinceLastSpawn;
+
+        protected int reward;
+
+        public Level(@NotNull final Game game, int reward) {
+            this.game = game;
+            this.reward = reward;
+            enemyQueue = new ConcurrentLinkedQueue<>();
+            delay = new ConcurrentLinkedQueue<>();
+            running = false;
+            framesSinceLastSpawn = 0;
+        }
+
+        public void addEnemy(@NotNull Enemy enemy, @NotNull int delayInFrames) {
+            enemyQueue.add(enemy);
+            delay.add(delayInFrames);
+        }
+
+        public void addEnemy(@NotNull Enemy enemy, @NotNull double delayInSeconds) {
+            enemyQueue.add(enemy);
+            delay.add((int) Math.round(delayInSeconds * Game.FRAME_RATE));
+        }
+
+        public void start() {
+            running = true;
+        }
+
+        public boolean update() {
+            if (this.running == false)
+                return false;
+
+            while (!enemyQueue.isEmpty() && framesSinceLastSpawn >= delay.peek()) {
+                summonEnemy();
+            }
+
+            if (enemyQueue.isEmpty())
+                this.running = false;
+
+            framesSinceLastSpawn++;
+            return true;
+        }
+
+        public boolean isRunning() {
+            return running;
+        }
+
+        public int getReward() {
+            return reward;
+        }
+
+        /**
+         * Summons the first enemy in the queue
+         */
+        protected void summonEnemy() {
+            enemyQueue.peek().findPath();       //Before being spawned, the entity should now an up to date path
+            game.getEnemiesManager().add(enemyQueue.poll());
+            delay.poll();
+            framesSinceLastSpawn = 0;
+        }
+    }
+
+    private class InfiniteLevel extends Level {
+        public InfiniteLevel(@NotNull Game game) {
+            super(game, 0);
+        }
+
+        public void start() {
+            addCompletelyRandomEnemy();
+            running = true;
+        }
+
+        @Override
+        public boolean update() {
+            while (!enemyQueue.isEmpty() && framesSinceLastSpawn >= delay.peek()) {
+                addCompletelyRandomEnemy();
+                summonEnemy();
+            }
+            framesSinceLastSpawn++;
+            return true;
+        }
+
+        private void addCompletelyRandomEnemy() {
+            Random rnd = new Random();
+            int r = rnd.nextInt(100);
+            if (r < 19) {
+                if (rnd.nextBoolean())
+                    addEnemy(new Soldier(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 0.2d);
+                else
+                    addEnemy(new Soldier(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 0.2d);
+            }
+            else if (r < 20) {
+                if (rnd.nextBoolean())
+                    addEnemy(new Zeppelin(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 5d);
+                else
+                    addEnemy(new Zeppelin(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 5d);
+            }
+            else if (r < 36) {
+                if (rnd.nextBoolean())
+                    addEnemy(new SlowTank(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 0.5d);
+                else
+                    addEnemy(new SlowTank(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 0.5d);
+            }
+            else if (r < 52) {
+                if (rnd.nextBoolean())
+                    addEnemy(new FastTank(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 0.5d);
+                else
+                    addEnemy(new FastTank(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 0.5d);
+            }
+            else if (r < 68) {
+                if (rnd.nextBoolean())
+                    addEnemy(new MilitaryCar(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 0.5d);
+                else
+                    addEnemy(new MilitaryCar(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 0.5d);
+            }
+            else if (r < 84) {
+                if (rnd.nextBoolean())
+                    addEnemy(new MilitaryTruck(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 0.5d);
+                else
+                    addEnemy(new MilitaryTruck(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 0.5d);
+            }
+            else {
+                if (rnd.nextBoolean())
+                    addEnemy(new Airplane(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 8d);
+                else
+                    addEnemy(new Airplane(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 8d);
+            }
+        }
+    }
 
     private void loadLevels() {
         Level temp;
@@ -337,145 +479,4 @@ public class LevelManager {
         levels.add(new InfiniteLevel(game));
     }
 
-
-
-
-    private class Level {
-
-        protected final Game game;
-
-        protected boolean running;
-
-        protected Queue<Enemy> enemyQueue;
-        protected Queue<Integer> delay;
-
-        protected int framesSinceLastSpawn;
-
-        protected int reward;
-
-        public Level(@NotNull final Game game, int reward) {
-            this.game = game;
-            this.reward = reward;
-            enemyQueue = new ConcurrentLinkedQueue<>();
-            delay = new ConcurrentLinkedQueue<>();
-            running = false;
-            framesSinceLastSpawn = 0;
-        }
-
-        public void addEnemy(@NotNull Enemy enemy, @NotNull int delayInFrames) {
-            enemyQueue.add(enemy);
-            delay.add(delayInFrames);
-        }
-
-        public void addEnemy(@NotNull Enemy enemy, @NotNull double delayInSeconds) {
-            enemyQueue.add(enemy);
-            delay.add((int) Math.round(delayInSeconds * Game.FRAME_RATE));
-        }
-
-        public void start() {
-            running = true;
-        }
-
-        public boolean update() {
-            if (this.running == false)
-                return false;
-
-            while (!enemyQueue.isEmpty() && framesSinceLastSpawn >= delay.peek()) {
-                summonEnemy();
-            }
-
-            if (enemyQueue.isEmpty())
-                this.running = false;
-
-            framesSinceLastSpawn++;
-            return true;
-        }
-
-        public boolean isRunning() {
-            return running;
-        }
-
-        public int getReward() {
-            return reward;
-        }
-
-        /**
-         * Summons the first enemy in the queue
-         */
-        protected void summonEnemy() {
-            enemyQueue.peek().findPath();       //Before being spawned, the entity should now an up to date path
-            game.getEnemiesManager().add(enemyQueue.poll());
-            delay.poll();
-            framesSinceLastSpawn = 0;
-        }
-    }
-
-    private class InfiniteLevel extends Level {
-        public InfiniteLevel(@NotNull Game game) {
-            super(game, 0);
-        }
-
-        public void start() {
-            addCompletelyRandomEnemy();
-            running = true;
-        }
-
-        @Override
-        public boolean update() {
-            while (!enemyQueue.isEmpty() && framesSinceLastSpawn >= delay.peek()) {
-                addCompletelyRandomEnemy();
-                summonEnemy();
-            }
-            framesSinceLastSpawn++;
-            return true;
-        }
-
-        private void addCompletelyRandomEnemy() {
-            Random rnd = new Random();
-            int r = rnd.nextInt(100);
-            if (r < 19) {
-                if (rnd.nextBoolean())
-                    addEnemy(new Soldier(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 0.2d);
-                else
-                    addEnemy(new Soldier(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 0.2d);
-            }
-            else if (r < 20) {
-                if (rnd.nextBoolean())
-                    addEnemy(new Zeppelin(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 5d);
-                else
-                    addEnemy(new Zeppelin(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 5d);
-            }
-            else if (r < 36) {
-                if (rnd.nextBoolean())
-                    addEnemy(new SlowTank(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 0.5d);
-                else
-                    addEnemy(new SlowTank(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 0.5d);
-            }
-            else if (r < 52) {
-                if (rnd.nextBoolean())
-                    addEnemy(new FastTank(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 0.5d);
-                else
-                    addEnemy(new FastTank(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 0.5d);
-            }
-            else if (r < 68) {
-                if (rnd.nextBoolean())
-                    addEnemy(new MilitaryCar(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 0.5d);
-                else
-                    addEnemy(new MilitaryCar(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 0.5d);
-            }
-            else if (r < 84) {
-                if (rnd.nextBoolean())
-                    addEnemy(new MilitaryTruck(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 0.5d);
-                else
-                    addEnemy(new MilitaryTruck(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 0.5d);
-            }
-            else {
-                if (rnd.nextBoolean())
-                    addEnemy(new Airplane(new Vector(-0.5, rnd.nextDouble(15d)), game.getPathfinding()), 8d);
-                else
-                    addEnemy(new Airplane(new Vector(rnd.nextDouble(15d), -0.5), game.getPathfinding()), 8d);
-            }
-        }
-
-    }
 }

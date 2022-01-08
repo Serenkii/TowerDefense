@@ -18,16 +18,17 @@ public class ProjectilesManager {
         this.game = game;
     }
 
+    /**
+     * Add a projectile to the ProjectilesManager and therefore the game (Battlefield).
+     * @param projectile The projectile that should be added.
+     */
     public void add(@NotNull Projectile projectile) {
         this.projectiles.add(projectile);
     }
 
-    public Projectile get(int i) {
-        return projectiles.get(i);
-    }
-
     /**
-     * Updates and renders every projectile
+     * Updates and renders every projectile.
+     * @implSpec Should be called once per frame.
      */
     public void renderAndUpdate() {
         projectiles.removeIf(projectile -> projectile.hasReachedTarget());

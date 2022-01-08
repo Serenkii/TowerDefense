@@ -61,7 +61,7 @@ public class EnemiesManager {
 
     /**
      * Add an enemy to the EnemiesManager and therefore the game (Battlefield).
-     * @param enemy
+     * @param enemy The enemy that should be added.
      */
     public void add(@NotNull Enemy enemy) {
         this.enemies.add(enemy);

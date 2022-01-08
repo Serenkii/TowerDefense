@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.ArrayList;
 
-//In theory, I could make one superclass with generics or something, but imo this is easier
 
 public class TowersManager {
 
@@ -59,7 +58,6 @@ public class TowersManager {
 
     private void initiatePlacingSoundPlayer() {
         Media sound = new Media(new File("src/main/resources/com/serenki/art/towers/placing.wav").toURI().toString());
-        System.out.println(new File("src/main/resources/com/serenki/art/towers/placing.wav").toURI().toString());
         this.placingSoundPlayer = new MediaPlayer(sound);
     }
 
@@ -78,13 +76,14 @@ public class TowersManager {
     }
 
     /**
-     * Updates and renders every tower. Call "renderSelectedTower()" later to render the selected tower with its range indication.
+     * Updates and renders every tower.
+     * @implSpec Should be called once per frame. Call "renderSelectedTower()" later to render the selected tower with its range indication.
      */
     public void renderAndUpdate() {
         for (Tower tower : towers) {
             tower.update();
             tower.render(this.game.getGraphicsContext());
-            if (tower.isSelected())     //this will maybe be changed when I add selecting towers
+            if (tower.isSelected())
                 this.selectedTower = tower;
         }
     }

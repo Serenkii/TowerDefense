@@ -16,6 +16,10 @@ public class Flamethrower extends Tower{
         super(300,0d, 2, enemiesManager, projectilesManager, "file:src/main/resources/com/serenki/art/towers/Flamethrower.png");
     }
 
+    /**
+     * Creates projectile that follows target.
+     * @implNote Should be called in update().
+     */
     @Override
     public void shoot() {
         updateCooldown();

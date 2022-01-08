@@ -10,6 +10,10 @@ public class Cannon extends Tower {
         super(500, 2.0d, 3d, enemiesManager, projectilesManager, "file:src/main/resources/com/serenki/art/towers/Cannon.png");
     }
 
+    /**
+     * Creates projectile that follows target.
+     * @implNote Should be called in update().
+     */
     @Override
     public void shoot() {
         updateCooldown();

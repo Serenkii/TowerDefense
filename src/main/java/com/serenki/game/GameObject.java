@@ -9,20 +9,20 @@ public abstract class GameObject {
 
     public abstract void update();
 
-    public GameObject(final String pathToImage) {
+    protected GameObject(final String pathToImage) {
         sprite = new Sprite(pathToImage);
     }
 
-    public GameObject(final String pathToImage, final double imageWidth, final double imageHeight) {
+    protected GameObject(final String pathToImage, final double imageWidth, final double imageHeight) {
         sprite = new Sprite(pathToImage, imageWidth, imageHeight);
     }
 
-    public GameObject(final Vector position, final String pathToImage) {
+    protected GameObject(final Vector position, final String pathToImage) {
         this.position = new Vector(position);
         sprite = new Sprite(pathToImage);
     }
 
-    public GameObject(final Vector position, final String pathToImage, final double imageWidth, final double imageHeight) {
+    protected GameObject(final Vector position, final String pathToImage, final double imageWidth, final double imageHeight) {
         this.position = new Vector(position);
         sprite = new Sprite(pathToImage, imageWidth, imageHeight);
     }
@@ -31,6 +31,10 @@ public abstract class GameObject {
         return position;
     }
 
+    /**
+     * Renders the sprite of the GameObject on the canvas.
+     * @param context The GraphicsContext of the canvas.
+     */
     public void render(GraphicsContext context) {
         sprite.render(position, context);
     }

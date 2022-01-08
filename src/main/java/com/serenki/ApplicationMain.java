@@ -33,13 +33,14 @@ public class ApplicationMain extends Application {
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.getIcons().add(new Image("file:src/main/resources/com/serenki/art/towers/QuadrupleShooter.png"));
         stage.show();
-
         AnimationTimer gameloop = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 game.update();
             }
         };
+
+
 
         game = new Game(gameWindowController, gameloop);            //TODO Refactor at some point so Game just extends AnimationTimer
 

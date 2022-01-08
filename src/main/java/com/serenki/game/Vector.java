@@ -130,7 +130,11 @@ public class Vector {
         return target.subtract(this);
     }
 
-
+    /**
+     * Calculates the angle to another vector.
+     * @param vector The second vector you want to calculate the angle to.
+     * @return The angle to the second vector as a radian. [0-pi]
+     */
     public double angleTo(@NotNull final Vector vector) {       //https://www.euclideanspace.com/maths/algebra/vectors/angleBetween/
         return Math.acos(this.normalize().dotProduct(vector.normalize()));
     }
